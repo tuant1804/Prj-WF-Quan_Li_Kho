@@ -1,8 +1,10 @@
-﻿using OfficeOpenXml;
+﻿using Microsoft.Office.Interop.Excel;
+using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Packaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,24 +16,36 @@ namespace Prj_WF_Quan_Li_Kho.Entities
     {
         public static void Export_Excel(CExcel p_objData, DataGridView p_drGrid)
         {
+            //Đăng ký bản quyền
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
             //Khai báo
-            ExcelPackage v_epData = new ExcelPackage();
-            SaveFileDialog dialog = new SaveFileDialog();
+            ExcelPackage v_epData = new();
+            SaveFileDialog v_dialog = new();
 
             string[] v_arrCol_Header = new string[p_drGrid.Columns.Count];
 
-            // chỉ lọc ra các file có định dạng Excel
-            dialog.Filter = "Excel | *.xlsx | Excel 2003 | *.xls";
+            //Chỉ lọc ra các file có định dạng Excel
+            v_dialog.Filter = "Excel | *.xlsx | Excel 2003 | *.xls";
+
+            //Gán tên file
+            v_dialog.FileName = Auto_Genarate_File_Name(CConfig.Excel_File_Path + "\\" + p_objData.File_Name);
+
+            //Gán địa chỉ lưu
+            v_dialog.CustomPlaces.Add(CConfig.Excel_File_Path);
+
+            //Nâng cấp giao diện với mỗi win
+            v_dialog.AutoUpgradeEnabled = true;
 
             // Nếu mở file và chọn nơi lưu file thành công sẽ lưu đường dẫn lại dùng
-            if (dialog.ShowDialog() == DialogResult.OK)
+            if (v_dialog.ShowDialog() == DialogResult.OK)
             {
-                p_objData.File_Path = dialog.FileName;
+                p_objData.File_Path = v_dialog.FileName;
             }
 
             if (string.IsNullOrEmpty(p_objData.File_Path))
             {
-                CMessage_Box_Custom.MB_Notification(CError_Basic.Error_File_Path, "Đường dẫn không hợp lệ!");
+                CMessage_Box_Custom.MB_Notification(CError_Basic.File_Path, "Đường dẫn không hợp lệ!");
                 return;
             }
 
@@ -45,14 +59,14 @@ namespace Prj_WF_Quan_Li_Kho.Entities
                 v_epData.Workbook.Worksheets.Add(p_objData.Name_Sheet);
 
                 //Lấy sheet đó ra xử lý
-                ExcelWorksheet v_ewSheet = v_epData.Workbook.Worksheets[1];
+                ExcelWorksheet v_ewSheet = v_epData.Workbook.Worksheets[0];
 
                 v_ewSheet.Cells.Style.Font.Size = 11;
                 // font family mặc định cho cả sheet
                 v_ewSheet.Cells.Style.Font.Name = "Calibri";
 
                 //Lấy số lượng col
-                int v_iCount_Col = v_arrCol_Header.Length;
+                int v_iCount_Col = v_arrCol_Header.Length - 3;
                 v_ewSheet.Cells[1, 1].Value = p_objData.Name_Title;
 
                 //Gôm cột lại
@@ -63,55 +77,71 @@ namespace Prj_WF_Quan_Li_Kho.Entities
                 int v_colIndex = 1;
                 int v_rowIndex = 2;
 
-                foreach (var item in v_arrCol_Header)
+                //Tạo Header
+                for (int i = 3; i < p_drGrid.Columns.Count; i++)
                 {
-                    var cell = v_ewSheet.Cells[v_colIndex, v_rowIndex];
-
-                    //set màu thành gray
-                    var fill = cell.Style.Fill;
-                    fill.PatternType = ExcelFillStyle.Solid;
-                    fill.BackgroundColor.SetColor(System.Drawing.Color.LightBlue);
-
-                    //căn chỉnh các border
-                    var border = cell.Style.Border;
-                    border.Bottom.Style =
-                    border.Top.Style =
-                    border.Left.Style =
-                    border.Right.Style = ExcelBorderStyle.Thin;
-
-                    //gán giá trị
-                    cell.Value = item;
-
-                    v_colIndex++;
+                    v_arrCol_Header[i] = p_drGrid.Columns[i].HeaderText;
                 }
 
-                // lấy liệu từ DataGrid
-                List<object> v_arrData_Excel = (List<object>)p_drGrid.DataSource;
-                foreach (var item in v_arrData_Excel)
+                foreach (var v_item in v_arrCol_Header)
                 {
-                    // bắt đầu ghi từ cột 1. Excel bắt đầu từ 1 không phải từ 0
-                    v_colIndex = 1;
+                    if (v_item != null)
+                    {
+                        var v_cell = v_ewSheet.Cells[v_rowIndex, v_colIndex];
 
-                    // rowIndex tương ứng từng dòng dữ liệu
-                    v_rowIndex++;
+                        //Set màu thành gray
+                        var v_fill = v_cell.Style.Fill;
+                        v_fill.PatternType = ExcelFillStyle.Solid;
+                        v_fill.BackgroundColor.SetColor(System.Drawing.Color.LightBlue);
 
-                    //gán giá trị cho từng cell                      
-                    //    v_ewSheet.Cells[v_rowIndex, v_colIndex++].Value = item.Name;
+                        //Căn chỉnh các border
+                        var v_border = v_cell.Style.Border;
+                        v_border.Bottom.Style =
+                        v_border.Top.Style =
+                        v_border.Left.Style =
+                        v_border.Right.Style = ExcelBorderStyle.Thin;
 
-                    //    // lưu ý phải .ToShortDateString để dữ liệu khi in ra Excel là ngày như ta vẫn thấy.Nếu không sẽ ra tổng số :v
-                    //    v_ewSheet.Cells[rowIndex, colIndex++].Value = item.Birthday.ToShortDateString();
+                        //Gán giá trị
+                        v_cell.Value = v_item;
 
-                    //}
-                    //Lưu file lại
-                    Byte[] bin = v_epData.GetAsByteArray();
-                    File.WriteAllBytes(p_objData.File_Path, bin);
+                        //Tự động fix width
+                        v_ewSheet.Cells[v_rowIndex, v_colIndex].AutoFitColumns();
 
+                        v_colIndex++;
+                    }
                 }
+
+                // Lấy liệu từ DataGrid
+                for (int i = 0; i < p_drGrid.Rows.Count; i++)
+                {
+                    for (int j = 0; j < p_drGrid.Columns.Count - 3; j++)
+                    {
+                        v_ewSheet.Cells[i + 3, j + 1].Value = p_drGrid.Rows[i].Cells[j + 3].Value;
+                    }
+                }
+                //Lưu file lại
+                Byte[] v_bin = v_epData.GetAsByteArray();
+                File.WriteAllBytes(p_objData.File_Path, v_bin);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
+                throw;
             }
+        }
+
+        static string Auto_Genarate_File_Name(string p_strFile_Path)
+        {
+            FileInfo v_fi = new FileInfo(p_strFile_Path + ".xlsx");
+
+            int v_iCount = 1;
+            while (v_fi.Exists)
+            {
+                p_strFile_Path = p_strFile_Path + $"({v_iCount})" + ".xlsx";
+                v_fi = new FileInfo(p_strFile_Path);
+                v_iCount++;
+            }
+
+            return p_strFile_Path;
         }
     }
 }

@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             panel1 = new System.Windows.Forms.Panel();
             btnThem = new System.Windows.Forms.Button();
             panel2 = new System.Windows.Forms.Panel();
@@ -38,6 +38,7 @@
             Auto_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             Ten_Don_Vi_Tinh = new System.Windows.Forms.DataGridViewTextBoxColumn();
             Ghi_Chu = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            btnExport = new System.Windows.Forms.Button();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)drGrid).BeginInit();
@@ -48,6 +49,7 @@
             panel1.BackColor = System.Drawing.SystemColors.Info;
             panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            panel1.Controls.Add(btnExport);
             panel1.Controls.Add(btnThem);
             panel1.Location = new System.Drawing.Point(1, 1);
             panel1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -57,10 +59,10 @@
             // 
             // btnThem
             // 
-            btnThem.Location = new System.Drawing.Point(1480, 12);
+            btnThem.Location = new System.Drawing.Point(1475, 20);
             btnThem.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             btnThem.Name = "btnThem";
-            btnThem.Size = new System.Drawing.Size(147, 51);
+            btnThem.Size = new System.Drawing.Size(140, 50);
             btnThem.TabIndex = 1;
             btnThem.Text = "Thêm";
             btnThem.UseVisualStyleBackColor = true;
@@ -85,14 +87,14 @@
             drGrid.AllowUserToResizeRows = false;
             drGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             drGrid.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            drGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            drGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             drGrid.ColumnHeadersHeight = 34;
             drGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { Deleted, Updated, Auto_ID, Ten_Don_Vi_Tinh, Ghi_Chu });
             drGrid.Location = new System.Drawing.Point(0, 0);
@@ -155,6 +157,16 @@
             Ghi_Chu.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             Ghi_Chu.Width = 737;
             // 
+            // btnExport
+            // 
+            btnExport.Location = new System.Drawing.Point(1292, 20);
+            btnExport.Name = "btnExport";
+            btnExport.Size = new System.Drawing.Size(140, 50);
+            btnExport.TabIndex = 2;
+            btnExport.Text = "Export Excel";
+            btnExport.UseVisualStyleBackColor = true;
+            btnExport.Click += btnExport_Click;
+            // 
             // frm_Data_Don_Vi_Tinh_Show
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
@@ -186,5 +198,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Auto_ID;
         private System.Windows.Forms.DataGridViewTextBoxColumn Ten_Don_Vi_Tinh;
         private System.Windows.Forms.DataGridViewTextBoxColumn Ghi_Chu;
+        private System.Windows.Forms.Button btnExport;
     }
 }

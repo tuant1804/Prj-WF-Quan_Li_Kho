@@ -97,7 +97,7 @@ namespace Prj_WF_Quan_Li_Kho
                         //Xử lý code
                         CData_Don_Vi_Tinh_Controller v_ctrlDon_Vi_Tinh = new CData_Don_Vi_Tinh_Controller();
                         CDaTa_Don_Vi_Tinh v_objData = v_ctrlDon_Vi_Tinh.Get_Data_Don_Vi_Tinh_By_ID(CSQL.SqlConnection, v_lngAuto_ID);
-                        
+
                         //Gán hàm cập nhật cuối
                         v_objData.Last_Updated_By_Function = "drGrid_CellContentClick_Deleted";
 
@@ -115,6 +115,24 @@ namespace Prj_WF_Quan_Li_Kho
             frm_Data_Don_Vi_Tinh_Show_Load(sender, e);
         }
 
+        private void btnExport_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                CExcel v_objData = new CExcel();
+                v_objData.Author = Last_Updated_By;
+                v_objData.File_Name = "Đơn Vị Tính";
+                v_objData.Name_Sheet = "Trang tính 1";
+                v_objData.Name_Title = "Danh sách đơn vị tính";
+
+                CExcel_Controller.Export_Excel(v_objData, drGrid);
+            }
+            catch (Exception)
+            {
+                CMessage_Box_Custom.MB_Notification(CError_Basic.Not_Close_File_Excel, "File excel bạn muốn thay đổi chưa đóng");
+                return;
+            }
+        }
     }
 }
 
