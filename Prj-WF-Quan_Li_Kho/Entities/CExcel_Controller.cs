@@ -29,7 +29,7 @@ namespace Prj_WF_Quan_Li_Kho.Entities
             v_dialog.Filter = "Excel | *.xlsx | Excel 2003 | *.xls";
 
             //Gán tên file
-            v_dialog.FileName = Auto_Genarate_File_Name(CConfig.Excel_File_Path + "\\" + p_objData.File_Name);
+            v_dialog.FileName = Auto_Generate_File_Name(CConfig.Excel_File_Path + "\\" + p_objData.File_Name);
 
             //Gán địa chỉ lưu
             v_dialog.CustomPlaces.Add(CConfig.Excel_File_Path);
@@ -129,7 +129,7 @@ namespace Prj_WF_Quan_Li_Kho.Entities
             }
         }
 
-        static string Auto_Genarate_File_Name(string p_strFile_Path)
+        static string Auto_Generate_File_Name(string p_strFile_Path)
         {
             FileInfo v_fi = new FileInfo(p_strFile_Path + ".xlsx");
 
