@@ -28,8 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             panel1 = new System.Windows.Forms.Panel();
+            btnExport = new System.Windows.Forms.Button();
             btnThem = new System.Windows.Forms.Button();
             panel2 = new System.Windows.Forms.Panel();
             drGrid = new System.Windows.Forms.DataGridView();
@@ -38,7 +39,6 @@
             Auto_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             Ten_Don_Vi_Tinh = new System.Windows.Forms.DataGridViewTextBoxColumn();
             Ghi_Chu = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            btnExport = new System.Windows.Forms.Button();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)drGrid).BeginInit();
@@ -56,6 +56,16 @@
             panel1.Name = "panel1";
             panel1.Size = new System.Drawing.Size(1639, 87);
             panel1.TabIndex = 0;
+            // 
+            // btnExport
+            // 
+            btnExport.Location = new System.Drawing.Point(1309, 20);
+            btnExport.Name = "btnExport";
+            btnExport.Size = new System.Drawing.Size(140, 50);
+            btnExport.TabIndex = 2;
+            btnExport.Text = "Export Excel";
+            btnExport.UseVisualStyleBackColor = true;
+            btnExport.Click += btnExport_Click;
             // 
             // btnThem
             // 
@@ -87,14 +97,14 @@
             drGrid.AllowUserToResizeRows = false;
             drGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             drGrid.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            drGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            drGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             drGrid.ColumnHeadersHeight = 34;
             drGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { Deleted, Updated, Auto_ID, Ten_Don_Vi_Tinh, Ghi_Chu });
             drGrid.Location = new System.Drawing.Point(0, 0);
@@ -156,16 +166,6 @@
             Ghi_Chu.ReadOnly = true;
             Ghi_Chu.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             Ghi_Chu.Width = 737;
-            // 
-            // btnExport
-            // 
-            btnExport.Location = new System.Drawing.Point(1292, 20);
-            btnExport.Name = "btnExport";
-            btnExport.Size = new System.Drawing.Size(140, 50);
-            btnExport.TabIndex = 2;
-            btnExport.Text = "Export Excel";
-            btnExport.UseVisualStyleBackColor = true;
-            btnExport.Click += btnExport_Click;
             // 
             // frm_Data_Don_Vi_Tinh_Show
             // 

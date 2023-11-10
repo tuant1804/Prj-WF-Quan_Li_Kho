@@ -29,7 +29,7 @@ namespace Prj_WF_Quan_Li_Kho.Entities
             v_dialog.Filter = "Excel | *.xlsx | Excel 2003 | *.xls";
 
             //Gán tên file
-            v_dialog.FileName = Auto_Generate_File_Name(CConfig.Excel_File_Path + "\\" + p_objData.File_Name);
+            v_dialog.FileName = Auto_Generate_File_Name(CConfig.Excel_File_Path, p_objData.File_Name);
 
             //Gán địa chỉ lưu
             v_dialog.CustomPlaces.Add(CConfig.Excel_File_Path);
@@ -45,7 +45,7 @@ namespace Prj_WF_Quan_Li_Kho.Entities
 
             if (string.IsNullOrEmpty(p_objData.File_Path))
             {
-                CMessage_Box_Custom.MB_Notification(CError_Basic.File_Path, "Đường dẫn không hợp lệ!");
+                CMessage_Box_Custom.MB_Notification(CError_Basic.File_Path, "Đường dẫn không hợp lệ!",MessageBoxIcon.Error);
                 return;
             }
 
@@ -129,19 +129,22 @@ namespace Prj_WF_Quan_Li_Kho.Entities
             }
         }
 
-        static string Auto_Generate_File_Name(string p_strFile_Path)
+        static string Auto_Generate_File_Name(string p_strFile_Path, string p_strFile_Name)
         {
-            FileInfo v_fi = new FileInfo(p_strFile_Path + ".xlsx");
+            string v_strFile_Name = p_strFile_Name;
+            string v_strFile_Path = p_strFile_Path + "\\" + v_strFile_Name + ".xlsx";
+            FileInfo v_fi = new(v_strFile_Path);
 
             int v_iCount = 1;
             while (v_fi.Exists)
             {
-                p_strFile_Path = p_strFile_Path + $"({v_iCount})" + ".xlsx";
-                v_fi = new FileInfo(p_strFile_Path);
+                v_strFile_Name = p_strFile_Name + $"({v_iCount})";
+                v_strFile_Path = p_strFile_Path + "\\" + v_strFile_Name + ".xlsx";
+                v_fi = new FileInfo(v_strFile_Path);
                 v_iCount++;
             }
 
-            return p_strFile_Path;
+            return v_strFile_Name + ".xlsx";
         }
     }
 }

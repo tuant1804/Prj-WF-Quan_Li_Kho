@@ -41,7 +41,7 @@ namespace Prj_WF_Quan_Li_Kho
             }
             catch (Exception ex)
             {
-                CMessage_Box_Custom.MB_Notification(CError_Basic.List_Error_Caption, ex.Message);
+                CMessage_Box_Custom.MB_Notification(CError_Basic.List_Error_Caption, ex.Message, MessageBoxIcon.Error);
                 Close();
                 return;
             }
@@ -81,13 +81,16 @@ namespace Prj_WF_Quan_Li_Kho
                 newEdit.Last_Updated_By_Function = "drGrid_CellContentClick_Updated";
 
                 newEdit.ShowDialog();
+
+                //Gọi lại hàm load
+                frm_Data_Don_Vi_Tinh_Show_Load(sender, e);
             }
             try
             {
                 //Lấy cột xóa
                 if (e.ColumnIndex == drGrid.Columns["Deleted"].Index && e.RowIndex >= 0)
                 {
-                    if (DialogResult.OK == CMessage_Box_Custom.MB_Notification(CCaption.Caption_Deleted, "Bạn có muốn xóa?"))
+                    if (DialogResult.Yes == CMessage_Box_Custom.MB_Notification(CCaption.Caption_Deleted, "Bạn có muốn xóa?", MessageBoxIcon.Question, MessageBoxButtons.YesNo))
                     {
                         //Lấy vị trí của cột Auto_ID
                         int v_intIndex = drGrid.Columns["Auto_ID"].Index;
@@ -103,16 +106,21 @@ namespace Prj_WF_Quan_Li_Kho
 
                         //Xóa
                         v_ctrlDon_Vi_Tinh.Deleted_Data_Don_Vi_Tinh(CSQL.SqlConnection, v_objData);
+
+                        //Xuất thông báo
+                        CMessage_Box_Custom.MB_Notification(CCaption.Caption_Deleted, "Xóa đơn vị tính thành công", MessageBoxIcon.None);
+
+                        //Gọi lại hàm load
+                        frm_Data_Don_Vi_Tinh_Show_Load(sender, e);
                     }
                 }
             }
             catch (Exception ex)
             {
-                CMessage_Box_Custom.MB_Notification(CCaption.Caption_Deleted, "" + ex.Message.ToString());
+                CMessage_Box_Custom.MB_Notification(CCaption.Caption_Deleted, "" + ex.Message.ToString(), MessageBoxIcon.Error);
                 return;
             }
             //Gọi lại load data
-            frm_Data_Don_Vi_Tinh_Show_Load(sender, e);
         }
 
         private void btnExport_Click(object sender, EventArgs e)
@@ -122,14 +130,16 @@ namespace Prj_WF_Quan_Li_Kho
                 CExcel v_objData = new CExcel();
                 v_objData.Author = Last_Updated_By;
                 v_objData.File_Name = "Đơn Vị Tính";
-                v_objData.Name_Sheet = "Trang tính 1";
+                v_objData.Name_Sheet = "Sheet 1";
                 v_objData.Name_Title = "Danh sách đơn vị tính";
 
                 CExcel_Controller.Export_Excel(v_objData, drGrid);
+
+                CMessage_Box_Custom.MB_Notification(CCaption.Caption_Export_Excel, "Export thành công", MessageBoxIcon.None);
             }
             catch (Exception)
             {
-                CMessage_Box_Custom.MB_Notification(CError_Basic.Not_Close_File_Excel, "File excel bạn muốn thay đổi chưa đóng");
+                CMessage_Box_Custom.MB_Notification(CError_Basic.Not_Close_File_Excel, "File excel bạn muốn thay đổi chưa đóng", MessageBoxIcon.Warning);
                 return;
             }
         }

@@ -44,7 +44,6 @@ namespace Prj_WF_Quan_Li_Kho
             {
                 Add();
             }
-            this.Close();
         }
 
         private void frm_Data_Don_Vi_Tinh_Edit_Load(object sender, EventArgs e)
@@ -74,14 +73,15 @@ namespace Prj_WF_Quan_Li_Kho
             {
                 CData_Don_Vi_Tinh_Controller v_ctrlDon_Vi_Tinh = new CData_Don_Vi_Tinh_Controller();
                 v_ctrlDon_Vi_Tinh.Updated_Data_Don_Vi_Tinh(CSQL.SqlConnection, m_objData);
+                CMessage_Box_Custom.MB_Notification(CCaption.Caption_Updated, "Cập nhật đơn vị tính thành công", MessageBoxIcon.None);
+                Close();
+
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message.ToString(),
-                    CError_Basic.Updated_Error_Caption,
-                    MessageBoxButtons.OK);
+                CMessage_Box_Custom.MB_Notification(CCaption.Caption_Updated, ex.ToString(), MessageBoxIcon.Error);
+                return;
             }
-
         }
 
         private void Add()
@@ -89,18 +89,19 @@ namespace Prj_WF_Quan_Li_Kho
             try
             {
                 m_objData.Ten_Don_Vi_Tinh = txtDon_Vi_Tinh.Text;
-                m_objData.Ghi_Chu = txtDon_Vi_Tinh.Text;
+                m_objData.Ghi_Chu = txtGhi_Chu.Text;
 
                 CData_Don_Vi_Tinh_Controller v_ctrlDon_Vi_Tinh = new CData_Don_Vi_Tinh_Controller();
                 v_ctrlDon_Vi_Tinh.Insert_Data_Don_Vi_Tinh(CSQL.SqlConnection, m_objData);
 
-                CMessage_Box_Custom.MB_Notification("Thông báo", "Thêm 1 đơn vị tính thành công");
+                CMessage_Box_Custom.MB_Notification(CCaption.Caption_Insert, "Thêm 1 đơn vị tính thành công", MessageBoxIcon.None);
+                Close();
+
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message.ToString(),
-                    CError_Basic.Add_Error_Caption,
-                    MessageBoxButtons.OK);
+                CMessage_Box_Custom.MB_Notification(CCaption.Caption_Insert, CError_Basic.Insert_Error_Caption, MessageBoxIcon.Error);
+                return;
             }
         }
     }

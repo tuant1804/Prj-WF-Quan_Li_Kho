@@ -94,7 +94,7 @@ namespace Prj_WF_Quan_Li_Kho
             }
             catch (Exception ex)
             {
-                CMessage_Box_Custom.MB_Notification("Thông báo", ex.Message.ToString());
+                CMessage_Box_Custom.MB_Notification("Thông báo", ex.Message.ToString(),MessageBoxIcon.Error);
                 return;
             }
         }
@@ -112,7 +112,7 @@ namespace Prj_WF_Quan_Li_Kho
             }
             catch (Exception ex)
             {
-                CMessage_Box_Custom.MB_Notification(CError_Basic.List_Error_Caption, ex.Message.ToString());
+                CMessage_Box_Custom.MB_Notification(CError_Basic.List_Error_Caption, ex.Message.ToString(),MessageBoxIcon.None);
                 Close();
                 return;
             }
