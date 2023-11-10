@@ -112,6 +112,7 @@ namespace Prj_WF_Quan_Li_Kho.Entities.Controller
                     p_lngAuto_ID);
                 if (v_dt.Rows.Count > 0)
                 {
+                    v_objData = new CDaTa_Don_Vi_Tinh();
                     Map_Data_To_Entity(v_dt.Rows[0], v_objData);
                 }
             }

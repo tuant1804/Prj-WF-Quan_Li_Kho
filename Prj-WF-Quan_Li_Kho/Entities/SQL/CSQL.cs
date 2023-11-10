@@ -50,8 +50,7 @@ namespace Prj_WF_Quan_Li_Kho.Entities.SQL
                     SqlCommandBuilder.DeriveParameters(v_command);
 
                     //Cho thời gian delay
-                    Task.Delay(10000);
-                    v_command.CommandTimeout = 50;
+                    v_command.CommandTimeout = 300;
 
 
 
@@ -121,9 +120,7 @@ namespace Prj_WF_Quan_Li_Kho.Entities.SQL
                     SqlCommandBuilder.DeriveParameters(v_command);
 
                     //Cho thời gian delay
-                    Task.Delay(10000);
-                    v_command.CommandTimeout = 100;
-
+                    v_command.CommandTimeout = 300;
 
                     // Nếu có tham số, thêm chúng vào SqlCommand
                     if (p_arrParams.Length + 1 != v_command.Parameters.Count)
@@ -176,13 +173,13 @@ namespace Prj_WF_Quan_Li_Kho.Entities.SQL
             DataTable v_dt = new DataTable();
             try
             {
-                p_conn.Open();
-
                 //Check chuỗi kết nối
                 if (p_conn == null)
                 {
                     throw new Exception("Chuỗi kết nối rỗng!");
                 }
+
+                p_conn.Open();
 
                 // Sử dụng SqlCommand để thực thi stored procedure
                 using (SqlCommand v_command = new SqlCommand(p_strStoredName.Trim(), p_conn))
@@ -194,9 +191,8 @@ namespace Prj_WF_Quan_Li_Kho.Entities.SQL
                     SqlCommandBuilder.DeriveParameters(v_command);
 
                     //Cho thời gian delay
-                    v_command.CommandTimeout = 100;
-                    Task.Delay(1000);
-
+                    v_command.CommandTimeout = 300;
+                 
                     // Nếu có tham số, thêm chúng vào SqlCommand
                     if (p_arrParams != null)
                     {
@@ -226,8 +222,6 @@ namespace Prj_WF_Quan_Li_Kho.Entities.SQL
             }
             finally
             {
-                // Dọn dẹp sau khi hoàn thành
-                v_dt.Dispose();
                 p_conn.Close();
             }
             // Trả về DataTable chứa dữ liệu

@@ -15,5 +15,6 @@ namespace Prj_WF_Quan_Li_Kho.Entities
         public static string Connection_String_Sql = "";
 
         public static string File_Name_Session_Luu_Vet_Dang_Nhap = "Session_Luu_Vet_Dang_Nhap.txt";
+
     }
 }

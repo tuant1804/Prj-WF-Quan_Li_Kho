@@ -13,8 +13,6 @@ namespace Prj_WF_Quan_Li_Kho
 {
     internal static class Program
     {
-        private static SqlConnection conn { get; set; }
-
         /// <summary>
         /// The main entry point for the application.
         /// </summary>

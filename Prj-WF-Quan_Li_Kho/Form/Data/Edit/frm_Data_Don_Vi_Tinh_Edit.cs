@@ -21,11 +21,11 @@ namespace Prj_WF_Quan_Li_Kho
 
         //Parameters
         public long m_lngAuto_ID { get; set; }
-        public bool m_Is_Updated { get; set; } = false;
+        public bool m_Is_Updated = false;
         public string Last_Updated_By { get; set; } = "";
+        public string Last_Updated_By_Function { get; set; } = "";
 
-
-        private CDaTa_Don_Vi_Tinh m_objData;
+        private CDaTa_Don_Vi_Tinh m_objData = new CDaTa_Don_Vi_Tinh();
 
         public frm_Data_Don_Vi_Tinh_Edit()
         {
@@ -36,6 +36,8 @@ namespace Prj_WF_Quan_Li_Kho
         {
             if (m_Is_Updated == true)
             {
+                m_objData.Ten_Don_Vi_Tinh = txtDon_Vi_Tinh.Text;
+                m_objData.Ghi_Chu = txtGhi_Chu.Text;
                 Updated();
             }
             else
@@ -63,6 +65,7 @@ namespace Prj_WF_Quan_Li_Kho
             txtGhi_Chu.Text = m_objData.Ghi_Chu;
 
             m_objData.Last_Updated_By = Last_Updated_By;
+            m_objData.Last_Updated_By_Function = Last_Updated_By_Function;
         }
 
         private void Updated()
@@ -75,7 +78,7 @@ namespace Prj_WF_Quan_Li_Kho
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message.ToString(),
-                    Error_Basic.Updated_Error_Caption,
+                    CError_Basic.Updated_Error_Caption,
                     MessageBoxButtons.OK);
             }
 
@@ -90,11 +93,13 @@ namespace Prj_WF_Quan_Li_Kho
 
                 CData_Don_Vi_Tinh_Controller v_ctrlDon_Vi_Tinh = new CData_Don_Vi_Tinh_Controller();
                 v_ctrlDon_Vi_Tinh.Insert_Data_Don_Vi_Tinh(CSQL.SqlConnection, m_objData);
+
+                CMessage_Box_Custom.MB_Notification("Thông báo", "Thêm 1 đơn vị tính thành công");
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message.ToString(),
-                    Error_Basic.Add_Error_Caption,
+                    CError_Basic.Add_Error_Caption,
                     MessageBoxButtons.OK);
             }
         }

@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace Prj_WF_Quan_Li_Kho.Entities
 {
-    public enum EValue
+    public class CCaption
     {
-        None = 0,
-        Successful = 1,
-        Warning = 2,
-        Error = 3,
+        public static string Caption_Updated  = "Thông báo cập nhật";
+        public static string Caption_Deleted = "Thông báo Xóa";
     }
 }
