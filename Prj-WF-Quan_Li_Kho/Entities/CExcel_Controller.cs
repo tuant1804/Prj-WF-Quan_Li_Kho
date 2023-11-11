@@ -245,12 +245,10 @@ namespace Prj_WF_Quan_Li_Kho.Entities
         {
             return Get_Cell_Value(1, p_strCell, p_fileInfo);
         }
-
         public static bool Check_Excel_File_Type(string p_strFileName)
         {
-            if (p_strFileName != ".xls" && p_strFileName != ".xlsx")
-                return false;
-            return true;
+            return p_strFileName == ".xls" || p_strFileName == ".xlsx";
         }
+
     }
 }
