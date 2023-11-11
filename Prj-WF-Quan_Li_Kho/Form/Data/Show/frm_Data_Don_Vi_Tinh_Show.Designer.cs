@@ -39,6 +39,7 @@
             Auto_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             Ten_Don_Vi_Tinh = new System.Windows.Forms.DataGridViewTextBoxColumn();
             Ghi_Chu = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            btnImport = new System.Windows.Forms.Button();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)drGrid).BeginInit();
@@ -49,6 +50,7 @@
             panel1.BackColor = System.Drawing.SystemColors.Info;
             panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            panel1.Controls.Add(btnImport);
             panel1.Controls.Add(btnExport);
             panel1.Controls.Add(btnThem);
             panel1.Location = new System.Drawing.Point(1, 1);
@@ -167,6 +169,16 @@
             Ghi_Chu.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             Ghi_Chu.Width = 737;
             // 
+            // btnImport
+            // 
+            btnImport.Location = new System.Drawing.Point(1141, 20);
+            btnImport.Name = "btnImport";
+            btnImport.Size = new System.Drawing.Size(140, 50);
+            btnImport.TabIndex = 4;
+            btnImport.Text = "Import Excel";
+            btnImport.UseVisualStyleBackColor = true;
+            btnImport.Click += btnImport_Click;
+            // 
             // frm_Data_Don_Vi_Tinh_Show
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
@@ -199,5 +211,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Ten_Don_Vi_Tinh;
         private System.Windows.Forms.DataGridViewTextBoxColumn Ghi_Chu;
         private System.Windows.Forms.Button btnExport;
+        private System.Windows.Forms.Button btnImport;
     }
 }

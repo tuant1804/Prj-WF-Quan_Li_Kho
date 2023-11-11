@@ -11,6 +11,9 @@ namespace Prj_WF_Quan_Li_Kho.Entities
         public static string Caption_Insert = "Thông báo thêm";
         public static string Caption_Updated  = "Thông báo cập nhật";
         public static string Caption_Deleted = "Thông báo Xóa";
-        public static string Caption_Export_Excel = "Export Excel";
+        public static string Caption_Export_Excel = "Thông báo Export Excel";
+        public static string Caption_Import_Excel = "Thông báo Import Excel";
+        public static string Caption_File_Path = "Thông báo Import Excel";
+
     }
 }

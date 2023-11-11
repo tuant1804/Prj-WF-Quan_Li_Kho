@@ -1,14 +1,17 @@
-﻿using Microsoft.Office.Interop.Excel;
+﻿
+using Microsoft.Office.Interop.Excel;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.IO.Packaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 
 namespace Prj_WF_Quan_Li_Kho.Entities
 {
@@ -29,10 +32,10 @@ namespace Prj_WF_Quan_Li_Kho.Entities
             v_dialog.Filter = "Excel | *.xlsx | Excel 2003 | *.xls";
 
             //Gán tên file
-            v_dialog.FileName = Auto_Generate_File_Name(CConfig.Excel_File_Path, p_objData.File_Name);
+            v_dialog.FileName = Auto_Generate_File_Name(CConfig.Excel_File_Path_Export, p_objData.File_Name);
 
             //Gán địa chỉ lưu
-            v_dialog.CustomPlaces.Add(CConfig.Excel_File_Path);
+            v_dialog.CustomPlaces.Add(CConfig.Excel_File_Path_Export);
 
             //Nâng cấp giao diện với mỗi win
             v_dialog.AutoUpgradeEnabled = true;
@@ -45,7 +48,7 @@ namespace Prj_WF_Quan_Li_Kho.Entities
 
             if (string.IsNullOrEmpty(p_objData.File_Path))
             {
-                CMessage_Box_Custom.MB_Notification(CError_Basic.File_Path, "Đường dẫn không hợp lệ!",MessageBoxIcon.Error);
+                CMessage_Box_Custom.MB_Notification(CError_Basic.File_Path, "Đường dẫn không hợp lệ!", MessageBoxIcon.Error);
                 return;
             }
 
@@ -128,7 +131,81 @@ namespace Prj_WF_Quan_Li_Kho.Entities
                 throw;
             }
         }
+        public static FileInfo Get_File_Excel()
+        {
+            CExcel v_objData = new CExcel();
+            OpenFileDialog v_dialog = new();
 
+            //Gán địa chỉ mặc định
+            v_dialog.InitialDirectory = CConfig.Excel_File_Path_Import;
+
+            //Nâng cấp giao diện với mỗi win
+            v_dialog.AutoUpgradeEnabled = true;
+
+            // Nếu mở file và chọn nơi lưu file thành công sẽ lưu đường dẫn lại dùng
+            if (v_dialog.ShowDialog() == DialogResult.OK)
+            {
+                v_objData.File_Path = v_dialog.FileName;
+            }
+            else
+            {
+                return null;
+            }
+
+            //Lấy file
+            return new FileInfo(v_objData.File_Path);
+        }
+        public static System.Data.DataTable List_Range_Value_To_End(int p_intSheet_Index, string p_strCell_From, string p_strCell_End, FileInfo p_fileInfo)
+        {
+            System.Data.DataTable v_dt = new System.Data.DataTable();
+            //Đăng ký bản quyền
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+            using (ExcelPackage v_excelPackage = new ExcelPackage(p_fileInfo))
+            {              
+                //Lấy sheet ra 
+                ExcelWorksheet v_excelWorkSheet = v_excelPackage.Workbook.Worksheets[p_intSheet_Index];
+
+                //Gán hàng bắt đầu
+                int v_intRowStart = v_excelWorkSheet.Cells[p_strCell_From].End.Row;
+
+                //Gán cột bắt đầu
+                int v_intColumnStart = v_excelWorkSheet.Cells[p_strCell_From].End.Column;
+
+                //Gán hàng kết thúc
+                int v_intRowEnd = v_excelWorkSheet.Dimension.End.Row;
+
+                //Gán đầy đủ vùng cần lấy của bảng
+                p_strCell_End = p_strCell_End + v_intRowEnd.ToString();
+
+                //Gán cột kết thúc
+                int v_intColumnEnd = v_excelWorkSheet.Cells[p_strCell_End].End.Column;
+
+                //Gán tên cột
+                foreach (var cell in v_excelWorkSheet.Cells[1, v_intColumnStart, 1, v_intColumnEnd])
+                {
+                    string v_strColumnName = cell.Text.Trim();
+                    v_dt.Columns.Add(v_strColumnName);
+                }
+
+                //Gán giá trị
+                for (int i = v_intRowStart; i <= v_intRowEnd; i++)
+                {
+                    var row = v_excelWorkSheet.Cells[i, v_intColumnStart, i, v_intColumnEnd];
+                    //Thêm một dòng mới
+                    DataRow v_Row = v_dt.NewRow();
+                    int v_intColumn = 0;
+                    for (int j = v_intColumnStart; j <= v_intColumnEnd; j++)
+                    {
+                        v_Row[v_intColumn] = row[i, j].Value;
+                        v_intColumn++;
+                    }
+                    v_dt.Rows.Add(v_Row);
+                }
+
+            }
+            return v_dt;
+        }
         static string Auto_Generate_File_Name(string p_strFile_Path, string p_strFile_Name)
         {
             string v_strFile_Name = p_strFile_Name;
@@ -145,6 +222,35 @@ namespace Prj_WF_Quan_Li_Kho.Entities
             }
 
             return v_strFile_Name + ".xlsx";
+        }
+        public string Get_Cell_Value(int p_intSheet_Index, string p_strCell, FileInfo p_fileInfo)
+        {
+            string v_strCell_Value = CConst.STR_VALUE_NULL;
+            //Đăng ký bản quyền
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+
+            using (ExcelPackage v_excelPackage = new ExcelPackage(p_fileInfo))
+            {
+                //Lấy sheet
+                ExcelWorksheet v_excelWorksheet = v_excelPackage.Workbook.Worksheets[$"Sheet{p_intSheet_Index}"];
+
+                //Nếu giá trị của ô cần lấy null
+                if (v_excelWorksheet.Cells[p_strCell].Value != null)
+                    v_strCell_Value = v_excelWorksheet.Cells[p_strCell].Value.ToString();
+            }
+            return v_strCell_Value;
+        }
+        public string Get_Cell_Value(string p_strCell, FileInfo p_fileInfo)
+        {
+            return Get_Cell_Value(1, p_strCell, p_fileInfo);
+        }
+
+        public static bool Check_Excel_File_Type(string p_strFileName)
+        {
+            if (p_strFileName != ".xls" && p_strFileName != ".xlsx")
+                return false;
+            return true;
         }
     }
 }

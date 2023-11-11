@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -141,6 +142,93 @@ namespace Prj_WF_Quan_Li_Kho
             {
                 CMessage_Box_Custom.MB_Notification(CError_Basic.Not_Close_File_Excel, "File excel bạn muốn thay đổi chưa đóng", MessageBoxIcon.Warning);
                 return;
+            }
+        }
+
+        private void btnImport_Click(object sender, EventArgs e)
+        {
+            //Khai báo controller và entities
+            CData_Don_Vi_Tinh_Controller v_ctrlDon_Vi_Tinh = new();
+            CDaTa_Don_Vi_Tinh v_objData = new();
+
+            //Lấy file excel
+            FileInfo v_fileInfo = CExcel_Controller.Get_File_Excel();
+
+            if (v_fileInfo != null)
+            {
+                string v_strTextExl = v_fileInfo.Extension;
+
+                //Kiểm tra có phải là file Excel không
+                if (!CExcel_Controller.Check_Excel_File_Type(v_strTextExl))
+                {
+                    CMessage_Box_Custom.MB_Notification(CCaption.Caption_File_Path,
+                        "File bạn chọn không phải là file Excel",
+                        MessageBoxIcon.Warning, MessageBoxButtons.OK);
+                    return;
+                }
+
+                //Phần xử lý code
+                try
+                {
+
+                    //Fill vào table
+                    DataTable v_dt = CExcel_Controller.List_Range_Value_To_End(0, "A3", "B", v_fileInfo);
+
+                    for (int v_i = v_dt.Rows.Count - 1; v_i >= 0; v_i--)
+                    {
+                        //Loại đi các hàng có đơn vị tính trống
+                        if (v_dt.Rows[v_i][0].ToString().Trim() == "")
+                        {
+                            v_dt.Rows.RemoveAt(v_i);
+                        }
+                    }
+
+                    int v_iCount = 0;
+                    int v_iCount_Insert_Success = 0;
+
+                    string v_strRow_Error = "";
+
+                    foreach (DataRow v_row in v_dt.Rows)
+                    {
+                        v_iCount++;
+                        try
+                        {
+                            //Xử lý code
+                            v_objData = new CDaTa_Don_Vi_Tinh();
+                            v_objData.Ten_Don_Vi_Tinh = CUtilities.Convert_To_String(v_row[0]);
+                            v_objData.Ghi_Chu = CUtilities.Convert_To_String(v_row[1]);
+                            v_ctrlDon_Vi_Tinh.Insert_Data_Don_Vi_Tinh(CSQL.SqlConnection, v_objData);
+
+                            //Đếm số hàng thêm thành công
+                            v_iCount_Insert_Success++;
+                        }
+                        catch (Exception ex) // bắt lỗi từng dòng
+                        {
+                            v_strRow_Error += "Hàng " + v_iCount.ToString() + " có lỗi: " + ex.Message + "\n";
+                        }
+                    }
+
+                    //Xuất thông báo thêm thành công
+                    string v_strMessage = "Thêm " + v_iCount_Insert_Success.ToString() + " dòng mới thành công" + "\n";
+
+                    //Nếu có lỗi thì xuất ra luôn
+                    if (v_strRow_Error != "")
+                    {
+                        v_strMessage += v_strRow_Error;
+                    }
+
+                    //Xuất thông báo
+                    CMessage_Box_Custom.MB_Notification(CCaption.Caption_Import_Excel, v_strMessage);
+
+                    //Gọi lại hàm load
+                    frm_Data_Don_Vi_Tinh_Show_Load(sender, e);
+                }
+                catch (Exception ex)
+                {
+                    CMessage_Box_Custom.MB_Notification(CCaption.Caption_Import_Excel,
+                        ex.Message,
+                        MessageBoxIcon.Error, MessageBoxButtons.OK);
+                }
             }
         }
     }
