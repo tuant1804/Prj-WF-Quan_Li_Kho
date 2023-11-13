@@ -2,27 +2,26 @@
 using Prj_WF_Quan_Li_Kho.Entities.SQL;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
+using System.Data;
 using System.Linq;
-using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Prj_WF_Quan_Li_Kho.Entities.Controller
 {
-    public class CData_Don_Vi_Tinh_Controller
+    public class CData_Loai_San_Pham_Controller
     {
-        private void Map_Data_To_Entity(DataRow p_row, CData_Don_Vi_Tinh p_objData)
+        private void Map_Data_To_Entity(DataRow p_row, CData_Loai_San_Pham p_objData)
         {
             DataTable v_dt = p_row.Table;
             if (v_dt.Columns.Contains("Auto_ID"))
             {
                 p_objData.Auto_ID = CUtilities.Convert_To_Long(p_row["Auto_ID"]);
             }
-            if (v_dt.Columns.Contains("Ten_Don_Vi_Tinh"))
+            if (v_dt.Columns.Contains("Ten_Loai_San_Pham"))
             {
-                p_objData.Ten_Don_Vi_Tinh = CUtilities.Convert_To_String(p_row["Ten_Don_Vi_Tinh"]);
+                p_objData.Ten_Loai_San_Pham = CUtilities.Convert_To_String(p_row["Ten_Loai_San_Pham"]);
             }
             if (v_dt.Columns.Contains("Ghi_Chu"))
             {
@@ -58,15 +57,15 @@ namespace Prj_WF_Quan_Li_Kho.Entities.Controller
             }
         }
 
-        public int Insert_Data_Don_Vi_Tinh(SqlConnection p_conn, CData_Don_Vi_Tinh p_objData)
+        public int Insert_Data_Loai_San_Pham(SqlConnection p_conn, CData_Loai_San_Pham p_objData)
         {
             int v_iRes = CConst.INT_VALUE_NULL;
             try
             {
 
                 v_iRes = CUtilities.Convert_To_Int_32(CSQL.FSQL_Execute_Scalar(
-                    p_conn, "sp_ins_Data_Don_Vi_Tinh",
-                    p_objData.Ten_Don_Vi_Tinh, p_objData.Ghi_Chu,
+                    p_conn, "sp_ins_Data_Loai_San_Pham",
+                    p_objData.Ten_Loai_San_Pham, p_objData.Ghi_Chu,
                     p_objData.Last_Updated_By, p_objData.Last_Updated_By_Function));
             }
             catch (Exception)
@@ -75,18 +74,18 @@ namespace Prj_WF_Quan_Li_Kho.Entities.Controller
             }
             return v_iRes;
         }
-        public List<CData_Don_Vi_Tinh> List_Data_Don_Vi_Tinh(
+        public List<CData_Loai_San_Pham> List_Data_Loai_San_Pham(
             SqlConnection p_conn)
         {
             DataTable v_dt = new DataTable();
-            List<CData_Don_Vi_Tinh> v_arrRes = new List<CData_Don_Vi_Tinh>();
+            List<CData_Loai_San_Pham> v_arrRes = new List<CData_Loai_San_Pham>();
             try
             {
 
-                v_dt = CSQL.FSQL_Get_Data_By_Stored(p_conn, "sp_sel_List_Data_Don_Vi_Tinh");
+                v_dt = CSQL.FSQL_Get_Data_By_Stored(p_conn, "sp_sel_List_Data_Loai_San_Pham");
                 foreach (DataRow v_row in v_dt.Rows)
                 {
-                    CData_Don_Vi_Tinh v_objData = new CData_Don_Vi_Tinh();
+                    CData_Loai_San_Pham v_objData = new CData_Loai_San_Pham();
                     Map_Data_To_Entity(v_row, v_objData);
                     v_arrRes.Add(v_objData);
                 }
@@ -101,18 +100,18 @@ namespace Prj_WF_Quan_Li_Kho.Entities.Controller
             }
             return v_arrRes;
         }
-        public CData_Don_Vi_Tinh Get_Data_Don_Vi_Tinh_By_ID(SqlConnection p_conn, long p_lngAuto_ID)
+        public CData_Loai_San_Pham Get_Data_Loai_San_Pham_By_ID(SqlConnection p_conn, long p_lngAuto_ID)
         {
             DataTable v_dt = new DataTable();
-            CData_Don_Vi_Tinh v_objData = null;
+            CData_Loai_San_Pham v_objData = null;
             try
             {
                 v_dt = CSQL.FSQL_Get_Data_By_Stored(p_conn,
-                    "sp_sel_Get_Data_Don_Vi_Tinh_By_ID",
+                    "sp_sel_Get_Data_Loai_San_Pham_By_ID",
                     p_lngAuto_ID);
                 if (v_dt.Rows.Count > 0)
                 {
-                    v_objData = new CData_Don_Vi_Tinh();
+                    v_objData = new CData_Loai_San_Pham();
                     Map_Data_To_Entity(v_dt.Rows[0], v_objData);
                 }
             }
@@ -126,11 +125,11 @@ namespace Prj_WF_Quan_Li_Kho.Entities.Controller
             }
             return v_objData;
         }
-        public void Deleted_Data_Don_Vi_Tinh(SqlConnection p_conn, CData_Don_Vi_Tinh p_objData)
+        public void Deleted_Data_Loai_San_Pham(SqlConnection p_conn, CData_Loai_San_Pham p_objData)
         {
             try
             {
-                CSQL.FSQL_Execute_Non_Query(p_conn, "sp_del_Data_Don_Vi_Tinh"
+                CSQL.FSQL_Execute_Non_Query(p_conn, "sp_del_Data_Loai_San_Pham"
                     , p_objData.Auto_ID,
                     p_objData.Last_Updated_By, p_objData.Last_Updated_By_Function);
             }
@@ -139,14 +138,14 @@ namespace Prj_WF_Quan_Li_Kho.Entities.Controller
                 throw;
             }
         }
-        public void Updated_Data_Don_Vi_Tinh(SqlConnection p_conn, CData_Don_Vi_Tinh p_objData)
+        public void Updated_Data_Loai_San_Pham(SqlConnection p_conn, CData_Loai_San_Pham p_objData)
         {
             try
             {
 
-                CSQL.FSQL_Execute_Non_Query(p_conn, "sp_upd_Data_Don_Vi_Tinh",
+                CSQL.FSQL_Execute_Non_Query(p_conn, "sp_upd_Data_Loai_San_Pham",
                     p_objData.Auto_ID,
-                    p_objData.Ten_Don_Vi_Tinh,
+                    p_objData.Ten_Loai_San_Pham,
                     p_objData.Ghi_Chu,
                     p_objData.Last_Updated_By, p_objData.Last_Updated_By_Function);
             }

@@ -18,7 +18,7 @@ namespace Prj_WF_Quan_Li_Kho
 {
     public partial class frm_Data_Don_Vi_Tinh_Show : Form
     {
-        private List<CDaTa_Don_Vi_Tinh> m_arrList_Data_Don_Vi_Tinh = new List<CDaTa_Don_Vi_Tinh>();
+        private List<CData_Don_Vi_Tinh> m_arrList_Data_Don_Vi_Tinh = new List<CData_Don_Vi_Tinh>();
         public string Last_Updated_By { get; set; } = "";
 
         public frm_Data_Don_Vi_Tinh_Show()
@@ -100,7 +100,7 @@ namespace Prj_WF_Quan_Li_Kho
                         long v_lngAuto_ID = CUtilities.Convert_To_Long(drGrid.Rows[e.RowIndex].Cells[v_intIndex].Value);
                         //Xử lý code
                         CData_Don_Vi_Tinh_Controller v_ctrlDon_Vi_Tinh = new CData_Don_Vi_Tinh_Controller();
-                        CDaTa_Don_Vi_Tinh v_objData = v_ctrlDon_Vi_Tinh.Get_Data_Don_Vi_Tinh_By_ID(CSQL.SqlConnection, v_lngAuto_ID);
+                        CData_Don_Vi_Tinh v_objData = v_ctrlDon_Vi_Tinh.Get_Data_Don_Vi_Tinh_By_ID(CSQL.SqlConnection, v_lngAuto_ID);
 
                         //Gán hàm cập nhật cuối
                         v_objData.Last_Updated_By_Function = "drGrid_CellContentClick_Deleted";
@@ -108,11 +108,13 @@ namespace Prj_WF_Quan_Li_Kho
                         //Xóa
                         v_ctrlDon_Vi_Tinh.Deleted_Data_Don_Vi_Tinh(CSQL.SqlConnection, v_objData);
 
+                        //Gọi lại hàm load
+                        frm_Data_Don_Vi_Tinh_Show_Load(sender, e);
+
                         //Xuất thông báo
                         CMessage_Box_Custom.MB_Notification(CCaption.Caption_Deleted, "Xóa đơn vị tính thành công", MessageBoxIcon.None);
 
-                        //Gọi lại hàm load
-                        frm_Data_Don_Vi_Tinh_Show_Load(sender, e);
+
                     }
                 }
             }
@@ -149,7 +151,7 @@ namespace Prj_WF_Quan_Li_Kho
         {
             //Khai báo controller và entities
             CData_Don_Vi_Tinh_Controller v_ctrlDon_Vi_Tinh = new();
-            CDaTa_Don_Vi_Tinh v_objData = new();
+            CData_Don_Vi_Tinh v_objData = new();
 
             //Lấy file excel
             FileInfo v_fileInfo = CExcel_Controller.Get_File_Excel();
@@ -194,7 +196,7 @@ namespace Prj_WF_Quan_Li_Kho
                         try
                         {
                             //Xử lý code
-                            v_objData = new CDaTa_Don_Vi_Tinh();
+                            v_objData = new CData_Don_Vi_Tinh();
                             v_objData.Ten_Don_Vi_Tinh = CUtilities.Convert_To_String(v_row[0]);
                             v_objData.Ghi_Chu = CUtilities.Convert_To_String(v_row[1]);
                             v_ctrlDon_Vi_Tinh.Insert_Data_Don_Vi_Tinh(CSQL.SqlConnection, v_objData);
@@ -216,12 +218,13 @@ namespace Prj_WF_Quan_Li_Kho
                     {
                         v_strMessage += v_strRow_Error;
                     }
+                    //Gọi lại hàm load
+                    frm_Data_Don_Vi_Tinh_Show_Load(sender, e);
 
                     //Xuất thông báo
                     CMessage_Box_Custom.MB_Notification(CCaption.Caption_Import_Excel, v_strMessage);
 
-                    //Gọi lại hàm load
-                    frm_Data_Don_Vi_Tinh_Show_Load(sender, e);
+
                 }
                 catch (Exception ex)
                 {

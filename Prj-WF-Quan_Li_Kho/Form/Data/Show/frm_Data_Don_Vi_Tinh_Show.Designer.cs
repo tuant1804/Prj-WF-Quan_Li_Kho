@@ -30,6 +30,7 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             panel1 = new System.Windows.Forms.Panel();
+            btnImport = new System.Windows.Forms.Button();
             btnExport = new System.Windows.Forms.Button();
             btnThem = new System.Windows.Forms.Button();
             panel2 = new System.Windows.Forms.Panel();
@@ -39,7 +40,6 @@
             Auto_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             Ten_Don_Vi_Tinh = new System.Windows.Forms.DataGridViewTextBoxColumn();
             Ghi_Chu = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            btnImport = new System.Windows.Forms.Button();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)drGrid).BeginInit();
@@ -58,6 +58,16 @@
             panel1.Name = "panel1";
             panel1.Size = new System.Drawing.Size(1639, 87);
             panel1.TabIndex = 0;
+            // 
+            // btnImport
+            // 
+            btnImport.Location = new System.Drawing.Point(1141, 20);
+            btnImport.Name = "btnImport";
+            btnImport.Size = new System.Drawing.Size(140, 50);
+            btnImport.TabIndex = 4;
+            btnImport.Text = "Import Excel";
+            btnImport.UseVisualStyleBackColor = true;
+            btnImport.Click += btnImport_Click;
             // 
             // btnExport
             // 
@@ -119,7 +129,7 @@
             drGrid.RowTemplate.Height = 28;
             drGrid.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             drGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            drGrid.Size = new System.Drawing.Size(1640, 688);
+            drGrid.Size = new System.Drawing.Size(1641, 688);
             drGrid.TabIndex = 0;
             drGrid.CellContentClick += drGrid_CellContentClick;
             // 
@@ -168,16 +178,6 @@
             Ghi_Chu.ReadOnly = true;
             Ghi_Chu.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             Ghi_Chu.Width = 737;
-            // 
-            // btnImport
-            // 
-            btnImport.Location = new System.Drawing.Point(1141, 20);
-            btnImport.Name = "btnImport";
-            btnImport.Size = new System.Drawing.Size(140, 50);
-            btnImport.TabIndex = 4;
-            btnImport.Text = "Import Excel";
-            btnImport.UseVisualStyleBackColor = true;
-            btnImport.Click += btnImport_Click;
             // 
             // frm_Data_Don_Vi_Tinh_Show
             // 

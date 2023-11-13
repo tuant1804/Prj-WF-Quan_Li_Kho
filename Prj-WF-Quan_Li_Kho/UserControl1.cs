@@ -46,21 +46,22 @@ namespace Prj_WF_Quan_Li_Kho
         #region Menu
         private void Don_Vi_Tinh_Item_Click(object sender, EventArgs e)
         {
-            frm_Data_Don_Vi_Tinh_Show frmDon_Vi_Tinh_Show = new frm_Data_Don_Vi_Tinh_Show();
+            frm_Data_Don_Vi_Tinh_Show frmDon_Vi_Tinh_Show = new();
             frmDon_Vi_Tinh_Show.Last_Updated_By = m_objThanh_Vien.User_Name;
             Show_Form_Item(frmDon_Vi_Tinh_Show);
         }
 
         private void Loai_San_Pham_Item_Click(object sender, EventArgs e)
         {
-            Show_Form_Item(new frm_Data_Loai_San_Pham_Edit());
+            frm_Data_Loai_San_Pham_Show frmLoai_San_Pham = new();
+            frmLoai_San_Pham.Last_Updated_By = m_objThanh_Vien.User_Name;
+            Show_Form_Item(frmLoai_San_Pham);
         }
 
 
         private void San_Pham_Item_Click(object sender, EventArgs e)
         {
             Show_Form_Item(new frm_Data_San_Pham_Show());
-
         }
 
         private void Kho_Item_2_Click(object sender, EventArgs e)

@@ -25,7 +25,7 @@ namespace Prj_WF_Quan_Li_Kho
         public string Last_Updated_By { get; set; } = "";
         public string Last_Updated_By_Function { get; set; } = "";
 
-        private CDaTa_Don_Vi_Tinh m_objData = new CDaTa_Don_Vi_Tinh();
+        private CData_Don_Vi_Tinh m_objData = new CData_Don_Vi_Tinh();
 
         public frm_Data_Don_Vi_Tinh_Edit()
         {
@@ -38,6 +38,7 @@ namespace Prj_WF_Quan_Li_Kho
             {
                 m_objData.Ten_Don_Vi_Tinh = txtDon_Vi_Tinh.Text;
                 m_objData.Ghi_Chu = txtGhi_Chu.Text;
+
                 Updated();
             }
             else
@@ -53,11 +54,17 @@ namespace Prj_WF_Quan_Li_Kho
 
             if (m_objData == null)
             {
-                m_objData = new CDaTa_Don_Vi_Tinh();
+                //Set tiêu đề form
+                this.Text = "Thêm";
+
+                m_objData = new CData_Don_Vi_Tinh();
                 m_Is_Updated = false;
             }
             else
             {
+                //Set tiêu đề form
+                this.Text = "Chỉnh sửa";
+
                 m_Is_Updated = true;
             }
             txtDon_Vi_Tinh.Text = m_objData.Ten_Don_Vi_Tinh;
@@ -72,6 +79,7 @@ namespace Prj_WF_Quan_Li_Kho
             try
             {
                 CData_Don_Vi_Tinh_Controller v_ctrlDon_Vi_Tinh = new CData_Don_Vi_Tinh_Controller();
+                m_objData.Last_Updated_By_Function = "Updated";
                 v_ctrlDon_Vi_Tinh.Updated_Data_Don_Vi_Tinh(CSQL.SqlConnection, m_objData);
                 CMessage_Box_Custom.MB_Notification(CCaption.Caption_Updated, "Cập nhật đơn vị tính thành công", MessageBoxIcon.None);
                 Close();
@@ -93,6 +101,7 @@ namespace Prj_WF_Quan_Li_Kho
 
                 CData_Don_Vi_Tinh_Controller v_ctrlDon_Vi_Tinh = new CData_Don_Vi_Tinh_Controller();
                 v_ctrlDon_Vi_Tinh.Insert_Data_Don_Vi_Tinh(CSQL.SqlConnection, m_objData);
+                m_objData.Last_Updated_By_Function = "Add";
 
                 CMessage_Box_Custom.MB_Notification(CCaption.Caption_Insert, "Thêm 1 đơn vị tính thành công", MessageBoxIcon.None);
                 Close();
@@ -100,9 +109,11 @@ namespace Prj_WF_Quan_Li_Kho
             }
             catch (Exception ex)
             {
-                CMessage_Box_Custom.MB_Notification(CCaption.Caption_Insert, CError_Basic.Insert_Error_Caption, MessageBoxIcon.Error);
+                CMessage_Box_Custom.MB_Notification(CCaption.Caption_Insert, CError_Basic.Insert_Error_Caption + ex.Message, MessageBoxIcon.Error);
                 return;
             }
         }
+
+
     }
 }
