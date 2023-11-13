@@ -92,7 +92,6 @@
             // 
             // panel2
             // 
-            panel2.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             panel2.BackColor = System.Drawing.SystemColors.ControlLightLight;
             panel2.Controls.Add(drGrid);
             panel2.Location = new System.Drawing.Point(1, 178);
@@ -119,7 +118,7 @@
             drGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             drGrid.ColumnHeadersHeight = 34;
             drGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { Deleted, Updated, Auto_ID, Ten_Loai_San_Pham, Ghi_Chu });
-            drGrid.Location = new System.Drawing.Point(0, 0);
+            drGrid.Location = new System.Drawing.Point(0, 55);
             drGrid.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             drGrid.MultiSelect = false;
             drGrid.Name = "drGrid";
@@ -129,7 +128,7 @@
             drGrid.RowTemplate.Height = 28;
             drGrid.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             drGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            drGrid.Size = new System.Drawing.Size(1641, 688);
+            drGrid.Size = new System.Drawing.Size(1641, 563);
             drGrid.TabIndex = 1;
             drGrid.CellContentClick += drGrid_CellContentClick;
             // 

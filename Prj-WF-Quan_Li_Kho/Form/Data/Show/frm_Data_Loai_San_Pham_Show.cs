@@ -183,18 +183,21 @@ namespace Prj_WF_Quan_Li_Kho
                         }
                     }
 
-                    int v_iCount = 0;
+                    int v_iCount = 1;
                     int v_iCount_Insert_Success = 0;
 
                     string v_strRow_Error = "";
 
                     foreach (DataRow v_row in v_dt.Rows)
                     {
-                        v_iCount++;
+                      
                         try
                         {
                             //Xử lý code
                             v_objData = new CData_Loai_San_Pham();
+                            v_objData.Last_Updated_By = Last_Updated_By;
+                            v_objData.Last_Updated_By_Function = "Import Excel";
+
                             v_objData.Ten_Loai_San_Pham = CUtilities.Convert_To_String(v_row[0]);
                             v_objData.Ghi_Chu = CUtilities.Convert_To_String(v_row[1]);
                             v_ctrlLoai_San_Pham.Insert_Data_Loai_San_Pham(CSQL.SqlConnection, v_objData);
@@ -206,6 +209,9 @@ namespace Prj_WF_Quan_Li_Kho
                         {
                             v_strRow_Error += "Hàng " + v_iCount.ToString() + " có lỗi: " + ex.Message + "\n";
                         }
+
+                        // Tăng số dòng lên
+                        v_iCount++;
                     }
 
                     //Xuất thông báo thêm thành công
@@ -232,6 +238,8 @@ namespace Prj_WF_Quan_Li_Kho
                 }
             }
         }
+
+
 
     }
 }

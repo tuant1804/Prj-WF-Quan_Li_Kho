@@ -78,10 +78,10 @@ namespace Prj_WF_Quan_Li_Kho
             try
             {
                 CData_Loai_San_Pham_Controller v_ctrlDon_Vi_Tinh = new CData_Loai_San_Pham_Controller();
-               v_ctrlDon_Vi_Tinh.Updated_Data_Loai_San_Pham(CSQL.SqlConnection, m_objData);
+                v_ctrlDon_Vi_Tinh.Updated_Data_Loai_San_Pham(CSQL.SqlConnection, m_objData);
 
-                CMessage_Box_Custom.MB_Notification(CCaption.Caption_Updated, "Cập nhật loại sản phẩm thành công", MessageBoxIcon.None);
                 Close();
+                CMessage_Box_Custom.MB_Notification(CCaption.Caption_Updated, "Cập nhật loại sản phẩm thành công", MessageBoxIcon.None);
 
             }
             catch (Exception ex)
@@ -101,8 +101,8 @@ namespace Prj_WF_Quan_Li_Kho
                 CData_Loai_San_Pham_Controller v_ctrlDon_Vi_Tinh = new CData_Loai_San_Pham_Controller();
                 v_ctrlDon_Vi_Tinh.Insert_Data_Loai_San_Pham(CSQL.SqlConnection, m_objData);
 
-                CMessage_Box_Custom.MB_Notification(CCaption.Caption_Insert, "Thêm 1 loại sản phẩm thành công", MessageBoxIcon.None);
                 Close();
+                CMessage_Box_Custom.MB_Notification(CCaption.Caption_Insert, "Thêm 1 loại sản phẩm thành công", MessageBoxIcon.None);
 
             }
             catch (Exception ex)

@@ -103,8 +103,9 @@ namespace Prj_WF_Quan_Li_Kho
                 v_ctrlDon_Vi_Tinh.Insert_Data_Don_Vi_Tinh(CSQL.SqlConnection, m_objData);
                 m_objData.Last_Updated_By_Function = "Add";
 
-                CMessage_Box_Custom.MB_Notification(CCaption.Caption_Insert, "Thêm 1 đơn vị tính thành công", MessageBoxIcon.None);
                 Close();
+                CMessage_Box_Custom.MB_Notification(CCaption.Caption_Insert, "Thêm 1 đơn vị tính thành công", MessageBoxIcon.None);
+
 
             }
             catch (Exception ex)
@@ -113,7 +114,6 @@ namespace Prj_WF_Quan_Li_Kho
                 return;
             }
         }
-
 
     }
 }

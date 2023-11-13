@@ -47,12 +47,10 @@ namespace Prj_WF_Quan_Li_Kho.Entities.SQL
                     v_command.CommandType = CommandType.StoredProcedure;
 
                     // Lấy danh sách các tham số của stored procedure
-                    SqlCommandBuilder.DeriveParameters(v_command);
+                    SqlCommandBuilder.DeriveParameters(v_command);                
 
                     //Cho thời gian delay
                     v_command.CommandTimeout = 300;
-
-
 
                     // Nếu có tham số, thêm chúng vào SqlCommand
                     if (p_arrParams.Length + 1 != v_command.Parameters.Count)
@@ -114,7 +112,6 @@ namespace Prj_WF_Quan_Li_Kho.Entities.SQL
                 {
                     // Đặt loại CommandType là StoredProcedure
                     v_command.CommandType = CommandType.StoredProcedure;
-
 
                     // Lấy danh sách các tham số của stored procedure
                     SqlCommandBuilder.DeriveParameters(v_command);

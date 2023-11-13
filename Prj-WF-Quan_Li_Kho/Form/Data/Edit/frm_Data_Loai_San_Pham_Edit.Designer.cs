@@ -59,6 +59,7 @@
             btnLuu.TabIndex = 4;
             btnLuu.Text = "Lưu";
             btnLuu.UseVisualStyleBackColor = true;
+            btnLuu.Click += btnLuu_Click;
             // 
             // txtGhi_Chu
             // 

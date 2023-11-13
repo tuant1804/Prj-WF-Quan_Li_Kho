@@ -51,7 +51,6 @@ namespace Prj_WF_Quan_Li_Kho
             CConfig.Connection_String_Sql = ConfigurationManager.ConnectionStrings["conn"].ConnectionString;
             
             CSQL.Create_Connection(CConfig.Connection_String_Sql);
-            
         }
     }
 }
