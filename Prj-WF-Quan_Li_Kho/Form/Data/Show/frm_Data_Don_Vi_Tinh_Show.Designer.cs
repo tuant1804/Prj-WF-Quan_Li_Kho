@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             panel1 = new System.Windows.Forms.Panel();
             btnImport = new System.Windows.Forms.Button();
             btnExport = new System.Windows.Forms.Button();
@@ -61,30 +61,30 @@
             // 
             // btnImport
             // 
-            btnImport.Location = new System.Drawing.Point(1141, 20);
+            btnImport.Location = new System.Drawing.Point(947, 20);
             btnImport.Name = "btnImport";
-            btnImport.Size = new System.Drawing.Size(140, 50);
+            btnImport.Size = new System.Drawing.Size(180, 50);
             btnImport.TabIndex = 4;
-            btnImport.Text = "Import Excel";
+            btnImport.Text = "Nhập từ Excel";
             btnImport.UseVisualStyleBackColor = true;
             btnImport.Click += btnImport_Click;
             // 
             // btnExport
             // 
-            btnExport.Location = new System.Drawing.Point(1309, 20);
+            btnExport.Location = new System.Drawing.Point(1178, 20);
             btnExport.Name = "btnExport";
-            btnExport.Size = new System.Drawing.Size(140, 50);
+            btnExport.Size = new System.Drawing.Size(180, 50);
             btnExport.TabIndex = 2;
-            btnExport.Text = "Export Excel";
+            btnExport.Text = "Trích Xuất Ra Excel";
             btnExport.UseVisualStyleBackColor = true;
             btnExport.Click += btnExport_Click;
             // 
             // btnThem
             // 
-            btnThem.Location = new System.Drawing.Point(1475, 20);
+            btnThem.Location = new System.Drawing.Point(1413, 20);
             btnThem.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             btnThem.Name = "btnThem";
-            btnThem.Size = new System.Drawing.Size(140, 50);
+            btnThem.Size = new System.Drawing.Size(180, 50);
             btnThem.TabIndex = 1;
             btnThem.Text = "Thêm";
             btnThem.UseVisualStyleBackColor = true;
@@ -109,14 +109,14 @@
             drGrid.AllowUserToResizeRows = false;
             drGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             drGrid.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            drGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            drGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             drGrid.ColumnHeadersHeight = 34;
             drGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { Deleted, Updated, Auto_ID, Ten_Don_Vi_Tinh, Ghi_Chu });
             drGrid.Location = new System.Drawing.Point(0, 0);
@@ -191,6 +191,7 @@
             Controls.Add(panel1);
             Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             Name = "frm_Data_Don_Vi_Tinh_Show";
+            StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "Đơn Vị Tính";
             Load += frm_Data_Don_Vi_Tinh_Show_Load;
             panel1.ResumeLayout(false);

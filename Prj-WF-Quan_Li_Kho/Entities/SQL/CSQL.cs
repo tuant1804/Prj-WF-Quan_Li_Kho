@@ -13,12 +13,15 @@ namespace Prj_WF_Quan_Li_Kho.Entities.SQL
 {
     public class CSQL
     {
-        public static SqlConnection SqlConnection { get; set; }
+        public static SqlConnection Connection { get; set; }
 
-        //
+        public CSQL()
+        {
+
+        }
         public static SqlConnection Create_Connection(string p_strConnec_string)
         {
-            return SqlConnection = new SqlConnection(p_strConnec_string);
+            return Connection = new SqlConnection(p_strConnec_string);
         }
 
 
@@ -41,42 +44,42 @@ namespace Prj_WF_Quan_Li_Kho.Entities.SQL
                 p_conn.Open();
 
                 // Sử dụng SqlCommand để thực thi stored procedure
-                using (SqlCommand v_command = new SqlCommand(p_strStoredName.Trim(), p_conn))
+                SqlCommand v_command = new SqlCommand();
+
+                // Đặt loại CommandType là StoredProcedure
+                v_command.CommandText = p_strStoredName.Trim();
+                v_command.CommandType = CommandType.StoredProcedure;
+
+                v_command.Connection = p_conn;
+                // Lấy danh sách các tham số của stored procedure
+                SqlCommandBuilder.DeriveParameters(v_command);
+
+                //Cho thời gian delay
+                // Nếu có tham số, thêm chúng vào SqlCommand
+                if (p_arrParams.Length + 1 != v_command.Parameters.Count)
                 {
-                    // Đặt loại CommandType là StoredProcedure
-                    v_command.CommandType = CommandType.StoredProcedure;
+                    throw new Exception("Parameters truyền vào sai số lượng vui lòng kiểm tra lại");
+                }
 
-                    // Lấy danh sách các tham số của stored procedure
-                    SqlCommandBuilder.DeriveParameters(v_command);                
-
-                    //Cho thời gian delay
-                    v_command.CommandTimeout = 300;
-
-                    // Nếu có tham số, thêm chúng vào SqlCommand
-                    if (p_arrParams.Length + 1 != v_command.Parameters.Count)
+                if (p_arrParams != null)
+                {
+                    for (int i = 0; i < p_arrParams.Length; i++)
                     {
-                        throw new Exception("Parameters truyền vào sai số lượng vui lòng kiểm tra lại");
-                    }
-
-                    if (p_arrParams != null)
-                    {
-                        for (int i = 0; i < p_arrParams.Length; i++)
+                        if (p_arrParams[i] == null)
                         {
-                            if (p_arrParams[i] == null)
-                            {
-                                v_command.Parameters[i + 1].Value = DBNull.Value;
-                            }
-                            else
-                            {
-                                // Đặt giá trị và kiểu dữ liệu cho từng tham số
-                                v_command.Parameters[i + 1].Value = p_arrParams[i];
-                            }
+                            v_command.Parameters[i + 1].Value = DBNull.Value;
+                        }
+                        else
+                        {
+                            // Đặt giá trị và kiểu dữ liệu cho từng tham số
+                            v_command.Parameters[i + 1].Value = p_arrParams[i];
                         }
                     }
-                    // Thực thi stored procedure
-                    v_command.ExecuteNonQuery();
-                    v_command.Parameters.Clear();
                 }
+                // Thực thi stored procedure
+                v_command.ExecuteNonQuery();
+                v_command.Parameters.Clear();
+
             }
             catch (Exception)
             {
@@ -108,42 +111,42 @@ namespace Prj_WF_Quan_Li_Kho.Entities.SQL
                 p_conn.Open();
 
                 // Sử dụng SqlCommand để thực thi stored procedure
-                using (SqlCommand v_command = new SqlCommand(p_strStoredName.Trim(), p_conn))
+                SqlCommand v_command = new SqlCommand(p_strStoredName.Trim(), p_conn);
+
+                // Đặt loại CommandType là StoredProcedure
+                v_command.CommandType = CommandType.StoredProcedure;
+
+                // Lấy danh sách các tham số của stored procedure
+                SqlCommandBuilder.DeriveParameters(v_command);
+
+                //Cho thời gian delay
+                v_command.CommandTimeout = 300;
+
+                // Nếu có tham số, thêm chúng vào SqlCommand
+                if (p_arrParams.Length + 1 != v_command.Parameters.Count)
                 {
-                    // Đặt loại CommandType là StoredProcedure
-                    v_command.CommandType = CommandType.StoredProcedure;
+                    throw new Exception("Parameters truyền vào sai số lượng vui lòng kiểm tra lại");
+                }
 
-                    // Lấy danh sách các tham số của stored procedure
-                    SqlCommandBuilder.DeriveParameters(v_command);
-
-                    //Cho thời gian delay
-                    v_command.CommandTimeout = 300;
-
-                    // Nếu có tham số, thêm chúng vào SqlCommand
-                    if (p_arrParams.Length + 1 != v_command.Parameters.Count)
+                if (p_arrParams != null)
+                {
+                    for (int i = 0; i < p_arrParams.Length; i++)
                     {
-                        throw new Exception("Parameters truyền vào sai số lượng vui lòng kiểm tra lại");
-                    }
-
-                    if (p_arrParams != null)
-                    {
-                        for (int i = 0; i < p_arrParams.Length; i++)
+                        if (p_arrParams[i] == null)
                         {
-                            if (p_arrParams[i] == null)
-                            {
-                                v_command.Parameters[i + 1].Value = DBNull.Value;
-                            }
-                            else
-                            {
-                                // Đặt giá trị và kiểu dữ liệu cho từng tham số
-                                v_command.Parameters[i + 1].Value = p_arrParams[i];
-                            }
+                            v_command.Parameters[i + 1].Value = DBNull.Value;
+                        }
+                        else
+                        {
+                            // Đặt giá trị và kiểu dữ liệu cho từng tham số
+                            v_command.Parameters[i + 1].Value = p_arrParams[i];
                         }
                     }
-                    // Thực thi stored procedure
-                    v_objRes = v_command.ExecuteScalar();
-                    v_command.Parameters.Clear();
                 }
+                // Thực thi stored procedure
+                v_objRes = v_command.ExecuteScalar();
+                v_command.Parameters.Clear();
+
             }
             catch (Exception)
             {
@@ -179,38 +182,39 @@ namespace Prj_WF_Quan_Li_Kho.Entities.SQL
                 p_conn.Open();
 
                 // Sử dụng SqlCommand để thực thi stored procedure
-                using (SqlCommand v_command = new SqlCommand(p_strStoredName.Trim(), p_conn))
+                SqlCommand v_command = new SqlCommand(p_strStoredName.Trim(), p_conn);
+
+                // Đặt loại CommandType là StoredProcedure
+                v_command.CommandType = CommandType.StoredProcedure;
+
+                // Lấy danh sách các tham số của stored procedure
+                SqlCommandBuilder.DeriveParameters(v_command);
+
+                //Cho thời gian delay
+                v_command.CommandTimeout = 300;
+
+                // Nếu có tham số, thêm chúng vào SqlCommand
+                if (p_arrParams != null)
                 {
-                    // Đặt loại CommandType là StoredProcedure
-                    v_command.CommandType = CommandType.StoredProcedure;
-
-                    // Lấy danh sách các tham số của stored procedure
-                    SqlCommandBuilder.DeriveParameters(v_command);
-
-                    //Cho thời gian delay
-                    v_command.CommandTimeout = 300;
-                 
-                    // Nếu có tham số, thêm chúng vào SqlCommand
-                    if (p_arrParams != null)
+                    for (int i = 0; i < p_arrParams.Length; i++)
                     {
-                        for (int i = 0; i < p_arrParams.Length; i++)
+                        if (p_arrParams[i] == null)
                         {
-                            if (p_arrParams[i] == null)
-                            {
-                                v_command.Parameters[i + 1].Value = DBNull.Value;
-                            }
-                            else
-                            {
-                                // Đặt giá trị và kiểu dữ liệu cho từng tham số
-                                v_command.Parameters[i + 1].Value = p_arrParams[i];
-                            }
-                            // Thêm từng tham số vào SqlCommand
+                            v_command.Parameters[i + 1].Value = DBNull.Value;
                         }
+                        else
+                        {
+                            // Đặt giá trị và kiểu dữ liệu cho từng tham số
+                            v_command.Parameters[i + 1].Value = p_arrParams[i];
+                        }
+                        // Thêm từng tham số vào SqlCommand
                     }
-                    // Sử dụng SqlDataAdapter để lấy dữ liệu từ cơ sở dữ liệu và đổ vào DataTable
-                    SqlDataAdapter dataAdapter = new SqlDataAdapter(v_command);
-                    dataAdapter.Fill(v_dt);
                 }
+
+                // Sử dụng SqlDataAdapter để lấy dữ liệu từ cơ sở dữ liệu và đổ vào DataTable
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(v_command);
+                dataAdapter.Fill(v_dt);
+
             }
             catch (Exception)
             {

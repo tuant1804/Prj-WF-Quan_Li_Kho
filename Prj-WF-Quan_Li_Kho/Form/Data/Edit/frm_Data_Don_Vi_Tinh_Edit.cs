@@ -50,7 +50,7 @@ namespace Prj_WF_Quan_Li_Kho
         private void frm_Data_Don_Vi_Tinh_Edit_Load(object sender, EventArgs e)
         {
             CData_Don_Vi_Tinh_Controller v_ctrlDon_Vi_Tinh = new CData_Don_Vi_Tinh_Controller();
-            m_objData = v_ctrlDon_Vi_Tinh.Get_Data_Don_Vi_Tinh_By_ID(CSQL.SqlConnection, m_lngAuto_ID);
+            m_objData = v_ctrlDon_Vi_Tinh.Get_Data_Don_Vi_Tinh_By_ID(CSQL.Connection, m_lngAuto_ID);
 
             if (m_objData == null)
             {
@@ -80,7 +80,7 @@ namespace Prj_WF_Quan_Li_Kho
             {
                 CData_Don_Vi_Tinh_Controller v_ctrlDon_Vi_Tinh = new CData_Don_Vi_Tinh_Controller();
                 m_objData.Last_Updated_By_Function = "Updated";
-                v_ctrlDon_Vi_Tinh.Updated_Data_Don_Vi_Tinh(CSQL.SqlConnection, m_objData);
+                v_ctrlDon_Vi_Tinh.Updated_Data_Don_Vi_Tinh(CSQL.Connection, m_objData);
                 CMessage_Box_Custom.MB_Notification(CCaption.Caption_Updated, "Cập nhật đơn vị tính thành công", MessageBoxIcon.None);
                 Close();
 
@@ -100,7 +100,7 @@ namespace Prj_WF_Quan_Li_Kho
                 m_objData.Ghi_Chu = txtGhi_Chu.Text;
 
                 CData_Don_Vi_Tinh_Controller v_ctrlDon_Vi_Tinh = new CData_Don_Vi_Tinh_Controller();
-                v_ctrlDon_Vi_Tinh.Insert_Data_Don_Vi_Tinh(CSQL.SqlConnection, m_objData);
+                v_ctrlDon_Vi_Tinh.Insert_Data_Don_Vi_Tinh(CSQL.Connection, m_objData);
                 m_objData.Last_Updated_By_Function = "Add";
 
                 Close();

@@ -74,9 +74,9 @@ namespace Prj_WF_Quan_Li_Kho
                 m_objData_Thanh_Vien_Chi_Tiet.Last_Updated_By = m_objData_Thanh_Vien.User_Name;
 
                 //Insert data vào database
-                int v_iThanh_Vien_ID = m_objCtr.FSys_Insert_Thanh_Vien(CSQL.SqlConnection, m_objData_Thanh_Vien);
+                int v_iThanh_Vien_ID = m_objCtr.FSys_Insert_Thanh_Vien(CSQL.Connection, m_objData_Thanh_Vien);
                 m_objData_Thanh_Vien_Chi_Tiet.Thanh_Vien_ID = v_iThanh_Vien_ID;
-                m_objCtr.FSys_Insert_Thanh_Vien_Chi_Tiet(CSQL.SqlConnection, m_objData_Thanh_Vien_Chi_Tiet);
+                m_objCtr.FSys_Insert_Thanh_Vien_Chi_Tiet(CSQL.Connection, m_objData_Thanh_Vien_Chi_Tiet);
 
                 //Thông báo
                 MessageBox.Show("Thông báo", "Đăng kí thành công", MessageBoxButtons.OK);
@@ -101,7 +101,7 @@ namespace Prj_WF_Quan_Li_Kho
             CSYS_Nhom_Quyen_Controller v_objCrl_Nhom_Quyen = new CSYS_Nhom_Quyen_Controller();
             //Tạo danh sách
             m_arrNhom_Quyen = v_objCrl_Nhom_Quyen.FSys_Get_List_Nhom_Quyen(
-                CSQL.SqlConnection);
+                CSQL.Connection);
 
 
             txt_User_Name.Text = CConst.STR_VALUE_NULL;

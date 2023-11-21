@@ -34,7 +34,7 @@ namespace Prj_WF_Quan_Li_Kho
             try
             {
                 CData_San_Pham_Controller v_ctrlSan_Pham = new CData_San_Pham_Controller();
-                m_arrList_Data_San_Pham = v_ctrlSan_Pham.List_Data_San_Pham(CSQL.SqlConnection);
+                m_arrList_Data_San_Pham = v_ctrlSan_Pham.List_Data_San_Pham(CSQL.Connection);
 
                 CCommon_Function.Load_Data_Grid_View(drGrid, m_arrList_Data_San_Pham);
 
@@ -98,13 +98,13 @@ namespace Prj_WF_Quan_Li_Kho
                         long v_lngAuto_ID = CUtilities.Convert_To_Long(drGrid.Rows[e.RowIndex].Cells[v_intIndex].Value);
                         //Xử lý code
                         CData_San_Pham_Controller v_ctrlSan_Pham = new CData_San_Pham_Controller();
-                        CData_San_Pham v_objData = v_ctrlSan_Pham.Get_Data_San_Pham_By_ID(CSQL.SqlConnection, v_lngAuto_ID);
+                        CData_San_Pham v_objData = v_ctrlSan_Pham.Get_Data_San_Pham_By_ID(CSQL.Connection, v_lngAuto_ID);
 
                         //Gán hàm cập nhật cuối
                         v_objData.Last_Updated_By_Function = "drGrid_CellContentClick_Deleted";
 
                         //Xóa
-                        v_ctrlSan_Pham.Delete_Data_San_Pham(CSQL.SqlConnection, v_objData);
+                        v_ctrlSan_Pham.Delete_Data_San_Pham(CSQL.Connection, v_objData);
 
 
                         //Gọi lại hàm load
@@ -200,7 +200,7 @@ namespace Prj_WF_Quan_Li_Kho
 
                             v_objData.Ten_San_Pham = CUtilities.Convert_To_String(v_row[0]);
                             v_objData.Ghi_Chu = CUtilities.Convert_To_String(v_row[1]);
-                            v_ctrlSan_Pham.Insert_Data_San_Pham(CSQL.SqlConnection, v_objData);
+                            v_ctrlSan_Pham.Insert_Data_San_Pham(CSQL.Connection, v_objData);
 
                             //Đếm số hàng thêm thành công
                             v_iCount_Insert_Success++;

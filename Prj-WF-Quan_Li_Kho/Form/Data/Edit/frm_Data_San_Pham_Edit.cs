@@ -25,12 +25,11 @@ namespace Prj_WF_Quan_Li_Kho
         public string Last_Updated_By { get; set; } = "";
         public string Last_Updated_By_Function { get; set; } = "";
 
+
         private CData_San_Pham m_objData = new CData_San_Pham();
 
         private List<CData_Don_Vi_Tinh> m_arrDon_Vi_Tinh = new List<CData_Don_Vi_Tinh>();
         private List<CData_Loai_San_Pham> m_arrLoai_San_Pham = new List<CData_Loai_San_Pham>();
-
-
 
         public frm_Data_San_Pham_Edit()
         {
@@ -56,7 +55,7 @@ namespace Prj_WF_Quan_Li_Kho
         private void frm_Data_San_Pham_Edit_Load(object sender, EventArgs e)
         {
             CData_San_Pham_Controller v_ctrlSan_Pham = new CData_San_Pham_Controller();
-            m_objData = v_ctrlSan_Pham.Get_Data_San_Pham_By_ID(CSQL.SqlConnection, m_lngAuto_ID);
+            m_objData = v_ctrlSan_Pham.Get_Data_San_Pham_By_ID(CSQL.Connection, m_lngAuto_ID);
 
             if (m_objData == null)
             {
@@ -85,8 +84,7 @@ namespace Prj_WF_Quan_Li_Kho
             try
             {
                 CData_San_Pham_Controller v_ctrlSan_Pham = new CData_San_Pham_Controller();
-                m_objData.Last_Updated_By_Function = "Updated";
-                v_ctrlSan_Pham.Updated_Data_San_Pham(CSQL.SqlConnection, m_objData);
+                v_ctrlSan_Pham.Updated_Data_San_Pham(CSQL.Connection, m_objData);
                 CMessage_Box_Custom.MB_Notification(CCaption.Caption_Updated, "Cập nhật đơn vị tính thành công", MessageBoxIcon.None);
                 Close();
 
@@ -106,8 +104,7 @@ namespace Prj_WF_Quan_Li_Kho
                 m_objData.Ghi_Chu = txtTen_San_Pham.Text;
 
                 CData_San_Pham_Controller v_ctrlSan_Pham = new CData_San_Pham_Controller();
-                v_ctrlSan_Pham.Insert_Data_San_Pham(CSQL.SqlConnection, m_objData);
-                m_objData.Last_Updated_By_Function = "Add";
+                v_ctrlSan_Pham.Insert_Data_San_Pham(CSQL.Connection, m_objData);
 
                 CMessage_Box_Custom.MB_Notification(CCaption.Caption_Insert, "Thêm 1 đơn vị tính thành công", MessageBoxIcon.None);
                 Close();

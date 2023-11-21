@@ -105,7 +105,7 @@ namespace Prj_WF_Quan_Li_Kho
             {
                 //Tạo list            
                 m_lstThanh_Vien.Clear();
-                m_lstThanh_Vien = m_objCtrl_Thanh_Vien.FSys_Get_List_Thanh_Vien(CSQL.SqlConnection);
+                m_lstThanh_Vien = m_objCtrl_Thanh_Vien.FSys_Get_List_Thanh_Vien(CSQL.Connection);
 
                 txt_User_Name.Text = m_objData.User_Name;
                 txt_Password.Text = m_objData.PassWord;

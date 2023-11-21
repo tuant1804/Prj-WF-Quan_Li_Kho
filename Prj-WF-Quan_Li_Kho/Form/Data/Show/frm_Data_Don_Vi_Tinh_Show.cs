@@ -34,7 +34,7 @@ namespace Prj_WF_Quan_Li_Kho
             try
             {
                 CData_Don_Vi_Tinh_Controller v_ctrlDon_Vi_Tinh = new CData_Don_Vi_Tinh_Controller();
-                m_arrList_Data_Don_Vi_Tinh = v_ctrlDon_Vi_Tinh.List_Data_Don_Vi_Tinh(CSQL.SqlConnection);
+                m_arrList_Data_Don_Vi_Tinh = v_ctrlDon_Vi_Tinh.List_Data_Don_Vi_Tinh(CSQL.Connection);
 
                 CCommon_Function.Load_Data_Grid_View(drGrid, m_arrList_Data_Don_Vi_Tinh);
 
@@ -53,10 +53,13 @@ namespace Prj_WF_Quan_Li_Kho
         private void btnThem_Click(object sender, EventArgs e)
         {
             frm_Data_Don_Vi_Tinh_Edit newEdit = new frm_Data_Don_Vi_Tinh_Edit();
+
             newEdit.Last_Updated_By = Last_Updated_By;
             newEdit.m_lngAuto_ID = 0;
             newEdit.Last_Updated_By_Function = "btnThem_Click";
+
             newEdit.ShowDialog();
+
             frm_Data_Don_Vi_Tinh_Show_Load(sender, e);
         }
 
@@ -98,23 +101,22 @@ namespace Prj_WF_Quan_Li_Kho
 
                         //Lấy giá trị của vị trí đó
                         long v_lngAuto_ID = CUtilities.Convert_To_Long(drGrid.Rows[e.RowIndex].Cells[v_intIndex].Value);
+                        
                         //Xử lý code
                         CData_Don_Vi_Tinh_Controller v_ctrlDon_Vi_Tinh = new CData_Don_Vi_Tinh_Controller();
-                        CData_Don_Vi_Tinh v_objData = v_ctrlDon_Vi_Tinh.Get_Data_Don_Vi_Tinh_By_ID(CSQL.SqlConnection, v_lngAuto_ID);
+                        CData_Don_Vi_Tinh v_objData = v_ctrlDon_Vi_Tinh.Get_Data_Don_Vi_Tinh_By_ID(CSQL.Connection, v_lngAuto_ID);
 
                         //Gán hàm cập nhật cuối
                         v_objData.Last_Updated_By_Function = "drGrid_CellContentClick_Deleted";
 
                         //Xóa
-                        v_ctrlDon_Vi_Tinh.Deleted_Data_Don_Vi_Tinh(CSQL.SqlConnection, v_objData);
+                        v_ctrlDon_Vi_Tinh.Deleted_Data_Don_Vi_Tinh(CSQL.Connection, v_objData);
 
                         //Gọi lại hàm load
                         frm_Data_Don_Vi_Tinh_Show_Load(sender, e);
 
                         //Xuất thông báo
                         CMessage_Box_Custom.MB_Notification(CCaption.Caption_Deleted, "Xóa đơn vị tính thành công", MessageBoxIcon.None);
-
-
                     }
                 }
             }
@@ -131,6 +133,7 @@ namespace Prj_WF_Quan_Li_Kho
             try
             {
                 CExcel v_objData = new CExcel();
+
                 v_objData.Author = Last_Updated_By;
                 v_objData.File_Name = "Đơn Vị Tính";
                 v_objData.Name_Sheet = "Sheet 1";
@@ -202,7 +205,7 @@ namespace Prj_WF_Quan_Li_Kho
 
                             v_objData.Ten_Don_Vi_Tinh = CUtilities.Convert_To_String(v_row[0]);
                             v_objData.Ghi_Chu = CUtilities.Convert_To_String(v_row[1]);
-                            v_ctrlDon_Vi_Tinh.Insert_Data_Don_Vi_Tinh(CSQL.SqlConnection, v_objData);
+                            v_ctrlDon_Vi_Tinh.Insert_Data_Don_Vi_Tinh(CSQL.Connection, v_objData);
 
                             //Đếm số hàng thêm thành công
                             v_iCount_Insert_Success++;
@@ -224,6 +227,7 @@ namespace Prj_WF_Quan_Li_Kho
                     {
                         v_strMessage += v_strRow_Error;
                     }
+
                     //Gọi lại hàm load
                     frm_Data_Don_Vi_Tinh_Show_Load(sender, e);
 

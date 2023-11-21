@@ -55,7 +55,7 @@ namespace Prj_WF_Quan_Li_Kho.Entities
             }
         }
         /// <summary>
-        /// Bỏ các col
+        /// Bỏ các col không dùng đến trong datagrid
         /// </summary>
         /// <param name="p_arrFields"></param>
         /// <returns></returns>
@@ -85,6 +85,11 @@ namespace Prj_WF_Quan_Li_Kho.Entities
             return v_arrFields;
         }
 
+        /// <summary>
+        /// Format Data Grid View
+        /// </summary>
+        /// <param name="p_drData"></param>
+        /// <param name="p_arrIndex_Col_Hide"></param>
         public static void Format_Data_Grid_View(DataGridView p_drData, params int[] p_arrIndex_Col_Hide)
         {
            

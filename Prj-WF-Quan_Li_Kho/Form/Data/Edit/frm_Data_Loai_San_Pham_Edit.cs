@@ -49,7 +49,7 @@ namespace Prj_WF_Quan_Li_Kho
         private void frm_Data_Loai_San_Pham_Edit_Load(object sender, EventArgs e)
         {
             CData_Loai_San_Pham_Controller v_ctrlDon_Vi_Tinh = new CData_Loai_San_Pham_Controller();
-            m_objData = v_ctrlDon_Vi_Tinh.Get_Data_Loai_San_Pham_By_ID(CSQL.SqlConnection, m_lngAuto_ID);
+            m_objData = v_ctrlDon_Vi_Tinh.Get_Data_Loai_San_Pham_By_ID(CSQL.Connection, m_lngAuto_ID);
 
             if (m_objData == null)
             {
@@ -78,7 +78,7 @@ namespace Prj_WF_Quan_Li_Kho
             try
             {
                 CData_Loai_San_Pham_Controller v_ctrlDon_Vi_Tinh = new CData_Loai_San_Pham_Controller();
-                v_ctrlDon_Vi_Tinh.Updated_Data_Loai_San_Pham(CSQL.SqlConnection, m_objData);
+                v_ctrlDon_Vi_Tinh.Updated_Data_Loai_San_Pham(CSQL.Connection, m_objData);
 
                 Close();
                 CMessage_Box_Custom.MB_Notification(CCaption.Caption_Updated, "Cập nhật loại sản phẩm thành công", MessageBoxIcon.None);
@@ -99,7 +99,7 @@ namespace Prj_WF_Quan_Li_Kho
                 m_objData.Ghi_Chu = txtGhi_Chu.Text;
 
                 CData_Loai_San_Pham_Controller v_ctrlDon_Vi_Tinh = new CData_Loai_San_Pham_Controller();
-                v_ctrlDon_Vi_Tinh.Insert_Data_Loai_San_Pham(CSQL.SqlConnection, m_objData);
+                v_ctrlDon_Vi_Tinh.Insert_Data_Loai_San_Pham(CSQL.Connection, m_objData);
 
                 Close();
                 CMessage_Box_Custom.MB_Notification(CCaption.Caption_Insert, "Thêm 1 loại sản phẩm thành công", MessageBoxIcon.None);
