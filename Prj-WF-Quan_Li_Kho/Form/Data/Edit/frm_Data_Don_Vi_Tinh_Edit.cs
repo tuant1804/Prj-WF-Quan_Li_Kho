@@ -34,11 +34,14 @@ namespace Prj_WF_Quan_Li_Kho
 
         private void btnLuu_Click(object sender, EventArgs e)
         {
-            if (m_Is_Updated == true)
-            {
-                m_objData.Ten_Don_Vi_Tinh = txtDon_Vi_Tinh.Text;
-                m_objData.Ghi_Chu = txtGhi_Chu.Text;
+            m_objData.Ten_Don_Vi_Tinh = txtDon_Vi_Tinh.Text;
+            m_objData.Ghi_Chu = txtGhi_Chu.Text;
 
+            m_objData.Last_Updated_By = Last_Updated_By;
+            m_objData.Last_Updated_By_Function = Last_Updated_By_Function;
+
+            if (m_Is_Updated == true)
+            {           
                 Updated();
             }
             else
@@ -55,7 +58,7 @@ namespace Prj_WF_Quan_Li_Kho
             if (m_objData == null)
             {
                 //Set tiêu đề form
-                this.Text = "Thêm";
+                Text = "Thêm";
 
                 m_objData = new CData_Don_Vi_Tinh();
                 m_Is_Updated = false;
@@ -63,15 +66,13 @@ namespace Prj_WF_Quan_Li_Kho
             else
             {
                 //Set tiêu đề form
-                this.Text = "Chỉnh sửa";
+                Text = "Chỉnh sửa";
 
                 m_Is_Updated = true;
             }
             txtDon_Vi_Tinh.Text = m_objData.Ten_Don_Vi_Tinh;
             txtGhi_Chu.Text = m_objData.Ghi_Chu;
 
-            m_objData.Last_Updated_By = Last_Updated_By;
-            m_objData.Last_Updated_By_Function = Last_Updated_By_Function;
         }
 
         private void Updated()
@@ -79,11 +80,10 @@ namespace Prj_WF_Quan_Li_Kho
             try
             {
                 CData_Don_Vi_Tinh_Controller v_ctrlDon_Vi_Tinh = new CData_Don_Vi_Tinh_Controller();
-                m_objData.Last_Updated_By_Function = "Updated";
+
                 v_ctrlDon_Vi_Tinh.Updated_Data_Don_Vi_Tinh(CSQL.Connection, m_objData);
                 CMessage_Box_Custom.MB_Notification(CCaption.Caption_Updated, "Cập nhật đơn vị tính thành công", MessageBoxIcon.None);
                 Close();
-
             }
             catch (Exception ex)
             {
@@ -101,8 +101,7 @@ namespace Prj_WF_Quan_Li_Kho
 
                 CData_Don_Vi_Tinh_Controller v_ctrlDon_Vi_Tinh = new CData_Don_Vi_Tinh_Controller();
                 v_ctrlDon_Vi_Tinh.Insert_Data_Don_Vi_Tinh(CSQL.Connection, m_objData);
-                m_objData.Last_Updated_By_Function = "Add";
-
+          
                 Close();
                 CMessage_Box_Custom.MB_Notification(CCaption.Caption_Insert, "Thêm 1 đơn vị tính thành công", MessageBoxIcon.None);
 

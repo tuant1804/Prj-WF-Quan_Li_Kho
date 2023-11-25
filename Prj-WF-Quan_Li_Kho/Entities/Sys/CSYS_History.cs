@@ -94,7 +94,7 @@ namespace Prj_WF_Quan_Li_Kho.Entities.Sys
             }
         }
 
-        public DateTime? Edit_Date
+        public DateTime? Deletion_Date
         {
             get
             {

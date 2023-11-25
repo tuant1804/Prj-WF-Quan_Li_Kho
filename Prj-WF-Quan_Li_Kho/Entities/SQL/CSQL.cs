@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
+﻿using OfficeOpenXml.ConditionalFormatting.Contracts;
+using System;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Prj_WF_Quan_Li_Kho.Entities.SQL
 {
@@ -39,22 +33,22 @@ namespace Prj_WF_Quan_Li_Kho.Entities.SQL
             {
                 if (p_conn == null)
                 {
-                    throw new Exception("Chuỗi kết nối rỗng!");
+                    p_conn = Connection;
+                    if (p_conn == null)
+                    {
+                        throw new Exception("Chuỗi kết nối rỗng !\nVui lòng kiểm tra chuỗi kết nối trong App.config");
+                    }
                 }
                 p_conn.Open();
 
                 // Sử dụng SqlCommand để thực thi stored procedure
-                SqlCommand v_command = new SqlCommand();
+                SqlCommand v_command = new SqlCommand(p_strStoredName.Trim(), p_conn);
 
                 // Đặt loại CommandType là StoredProcedure
-                v_command.CommandText = p_strStoredName.Trim();
                 v_command.CommandType = CommandType.StoredProcedure;
-
-                v_command.Connection = p_conn;
                 // Lấy danh sách các tham số của stored procedure
                 SqlCommandBuilder.DeriveParameters(v_command);
 
-                //Cho thời gian delay
                 // Nếu có tham số, thêm chúng vào SqlCommand
                 if (p_arrParams.Length + 1 != v_command.Parameters.Count)
                 {
@@ -78,6 +72,8 @@ namespace Prj_WF_Quan_Li_Kho.Entities.SQL
                 }
                 // Thực thi stored procedure
                 v_command.ExecuteNonQuery();
+
+                //Cờ lia param
                 v_command.Parameters.Clear();
 
             }
@@ -106,7 +102,11 @@ namespace Prj_WF_Quan_Li_Kho.Entities.SQL
             {
                 if (p_conn == null)
                 {
-                    throw new Exception("Chuỗi kết nối rỗng!");
+                    p_conn = Connection;
+                    if (p_conn == null)
+                    {
+                        throw new Exception("Chuỗi kết nối rỗng !\nVui lòng kiểm tra chuỗi kết nối trong App.config");
+                    }
                 }
                 p_conn.Open();
 
@@ -176,7 +176,11 @@ namespace Prj_WF_Quan_Li_Kho.Entities.SQL
                 //Check chuỗi kết nối
                 if (p_conn == null)
                 {
-                    throw new Exception("Chuỗi kết nối rỗng!");
+                    p_conn = Connection;
+                    if (p_conn == null)
+                    {
+                        throw new Exception("Chuỗi kết nối rỗng !\nVui lòng kiểm tra chuỗi kết nối trong App.config");
+                    }
                 }
 
                 p_conn.Open();

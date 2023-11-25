@@ -16,8 +16,8 @@ namespace Prj_WF_Quan_Li_Kho.Entities
 
         public static string File_Name_Session_Luu_Vet_Dang_Nhap = "Session_Luu_Vet_Dang_Nhap.txt";
 
-        public static string Excel_File_Path_Export = "C:\\Users\\tuan0\\Downloads";
-        public static string Excel_File_Path_Import = "C:\\Tuan\\Excel";
+        public static string Excel_File_Path_Export = @"C:\Users\tuan0\Downloads";
+        public static string Excel_File_Path_Import = @"C:\Tuan\Excel";
 
 
     }

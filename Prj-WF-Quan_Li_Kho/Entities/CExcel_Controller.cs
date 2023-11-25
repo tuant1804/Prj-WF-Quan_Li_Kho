@@ -21,24 +21,38 @@ namespace Prj_WF_Quan_Li_Kho.Entities
         {
             //Đăng ký bản quyền
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-
             //Khai báo
             ExcelPackage v_epData = new();
             SaveFileDialog v_dialog = new();
 
-            string[] v_arrCol_Header = new string[p_drGrid.Columns.Count];
+            //Đếm số lượng cột bị ẩn
+            HashSet<string> v_has = new HashSet<string>();
+            for (int i = 2; i < p_drGrid.Columns.Count; i++)
+            {
+                if (!p_drGrid.Columns[i].Visible)
+                {
+                    v_has.Add(p_drGrid.Columns[i].Name);
+                }
+            }
+
+            string[] v_arrCol_Header = new string[p_drGrid.Columns.Count - 2];
 
             //Chỉ lọc ra các file có định dạng Excel
             v_dialog.Filter = "Excel | *.xlsx | Excel 2003 | *.xls";
 
+            //Nâng cấp giao diện với mỗi win
+            v_dialog.AutoUpgradeEnabled = true;
+
             //Gán tên file
             v_dialog.FileName = Auto_Generate_File_Name(CConfig.Excel_File_Path_Export, p_objData.File_Name);
 
-            //Gán địa chỉ lưu
-            v_dialog.CustomPlaces.Add(CConfig.Excel_File_Path_Export);
+            // Gán địa chỉ lưu
+            v_dialog.InitialDirectory = CConfig.Excel_File_Path_Export;
+            //Gán cứng địa chỉ lưu
+            v_dialog.RestoreDirectory = true;
 
-            //Nâng cấp giao diện với mỗi win
-            v_dialog.AutoUpgradeEnabled = true;
+            //Gán địa chỉ lưu
+            //v_dialog.CustomPlaces.Add(CConfig.Excel_File_Path_Export + "/"+p_objData.File_Name);
 
             // Nếu mở file và chọn nơi lưu file thành công sẽ lưu đường dẫn lại dùng
             if (v_dialog.ShowDialog() == DialogResult.OK)
@@ -48,8 +62,7 @@ namespace Prj_WF_Quan_Li_Kho.Entities
 
             if (string.IsNullOrEmpty(p_objData.File_Path))
             {
-                CMessage_Box_Custom.MB_Notification(CError_Basic.File_Path, "Đường dẫn không hợp lệ!", MessageBoxIcon.Error);
-                return;
+                throw new Exception("Thêm không thành công !");
             }
 
             try
@@ -69,7 +82,7 @@ namespace Prj_WF_Quan_Li_Kho.Entities
                 v_ewSheet.Cells.Style.Font.Name = "Calibri";
 
                 //Lấy số lượng col
-                int v_iCount_Col = v_arrCol_Header.Length - 3;
+                int v_iCount_Col = v_arrCol_Header.Length - v_has.Count;
                 v_ewSheet.Cells[1, 1].Value = p_objData.Name_Title;
 
                 //Gôm cột lại
@@ -81,9 +94,14 @@ namespace Prj_WF_Quan_Li_Kho.Entities
                 int v_rowIndex = 2;
 
                 //Tạo Header
-                for (int i = 3; i < p_drGrid.Columns.Count; i++)
+                int v_icol_index = 0;
+                for (int i = 2; i < p_drGrid.Columns.Count; i++)
                 {
-                    v_arrCol_Header[i] = p_drGrid.Columns[i].HeaderText;
+                    if (p_drGrid.Columns[i].Visible)
+                    {
+                        v_arrCol_Header[v_icol_index] = p_drGrid.Columns[i].HeaderText;
+                        v_icol_index++;
+                    }
                 }
 
                 foreach (var v_item in v_arrCol_Header)
@@ -113,15 +131,25 @@ namespace Prj_WF_Quan_Li_Kho.Entities
                         v_colIndex++;
                     }
                 }
-
+                //Lấy các cột dòng bắt đầu
+                int v_iRow = 3;
+                int v_iCol = 1;
                 // Lấy liệu từ DataGrid
-                for (int i = 0; i < p_drGrid.Rows.Count; i++)
+
+                for (int i = 2; i < p_drGrid.Rows.Count; i++)
                 {
-                    for (int j = 0; j < p_drGrid.Columns.Count - 3; j++)
+                    v_iCol = 1;//Gán lại chỉ số col
+                    for (int j = 2; j < p_drGrid.Columns.Count; j++)
                     {
-                        v_ewSheet.Cells[i + 3, j + 1].Value = p_drGrid.Rows[i].Cells[j + 3].Value;
+                        if (!v_has.Contains(p_drGrid.Columns[j].Name))
+                        {
+                            v_ewSheet.Cells[v_iRow, (v_iCol++)].Value = p_drGrid.Rows[i].Cells[j].Value;
+                        }
                     }
+                    v_iRow++; // Tăng số dòng
                 }
+
+
                 //Lưu file lại
                 Byte[] v_bin = v_epData.GetAsByteArray();
                 File.WriteAllBytes(p_objData.File_Path, v_bin);
@@ -162,7 +190,7 @@ namespace Prj_WF_Quan_Li_Kho.Entities
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
             using (ExcelPackage v_excelPackage = new ExcelPackage(p_fileInfo))
-            {              
+            {
                 //Lấy sheet ra 
                 ExcelWorksheet v_excelWorkSheet = v_excelPackage.Workbook.Worksheets[p_intSheet_Index];
 

@@ -8,7 +8,6 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Telerik.WinControls.UI.Scheduler.ICalendar;
 
 namespace Prj_WF_Quan_Li_Kho.Entities.Controller
 {
@@ -39,7 +38,7 @@ namespace Prj_WF_Quan_Li_Kho.Entities.Controller
             }
             if (v_dt.Columns.Contains("Edit_Date"))
             {
-                p_objData.Deletion_Date = (DateTime)CUtilities.Convert_To_DateTime(p_row["Edit_Date"]);
+                p_objData. Deletion_Date= (DateTime)CUtilities.Convert_To_DateTime(p_row["Edit_Date"]);
             }
             if (v_dt.Columns.Contains("Implementer"))
             {

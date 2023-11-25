@@ -47,7 +47,7 @@ namespace Prj_WF_Quan_Li_Kho
         private void Don_Vi_Tinh_Item_Click(object sender, EventArgs e)
         {
             frm_Data_Don_Vi_Tinh_Show frmDon_Vi_Tinh_Show = new();
-            frmDon_Vi_Tinh_Show.Last_Updated_By = m_objThanh_Vien.User_Name;
+            frmDon_Vi_Tinh_Show.User_Name = m_objThanh_Vien.User_Name;
             Show_Form_Item(frmDon_Vi_Tinh_Show);
         }
 

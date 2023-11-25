@@ -19,26 +19,31 @@ namespace Prj_WF_Quan_Li_Kho
     public partial class frm_Data_Don_Vi_Tinh_Show : Form
     {
         private List<CData_Don_Vi_Tinh> m_arrList_Data_Don_Vi_Tinh = new List<CData_Don_Vi_Tinh>();
-        public string Last_Updated_By { get; set; } = "";
+        private List<int> m_arrList_Hide_Col_Index = new List<int>();
+        public string User_Name { get; set; } = "";
 
         public frm_Data_Don_Vi_Tinh_Show()
         {
             InitializeComponent();
 
             //Cho form xuất hiện giữa màn hình
-            this.CenterToScreen();
+            CenterToScreen();
         }
 
         private void frm_Data_Don_Vi_Tinh_Show_Load(object sender, EventArgs e)
         {
             try
             {
+
+
                 CData_Don_Vi_Tinh_Controller v_ctrlDon_Vi_Tinh = new CData_Don_Vi_Tinh_Controller();
                 m_arrList_Data_Don_Vi_Tinh = v_ctrlDon_Vi_Tinh.List_Data_Don_Vi_Tinh(CSQL.Connection);
 
                 CCommon_Function.Load_Data_Grid_View(drGrid, m_arrList_Data_Don_Vi_Tinh);
 
-                CCommon_Function.Format_Data_Grid_View(drGrid, 2);
+                //Format lại data grid
+                CCommon_Function.Format_Data_Grid_View(drGrid, m_arrList_Hide_Col_Index.ToArray());
+
             }
             catch (Exception ex)
             {
@@ -48,13 +53,11 @@ namespace Prj_WF_Quan_Li_Kho
             }
         }
 
-
-
         private void btnThem_Click(object sender, EventArgs e)
         {
             frm_Data_Don_Vi_Tinh_Edit newEdit = new frm_Data_Don_Vi_Tinh_Edit();
 
-            newEdit.Last_Updated_By = Last_Updated_By;
+            newEdit.Last_Updated_By = User_Name;
             newEdit.m_lngAuto_ID = 0;
             newEdit.Last_Updated_By_Function = "btnThem_Click";
 
@@ -80,7 +83,7 @@ namespace Prj_WF_Quan_Li_Kho
                 //Gán ID
                 newEdit.m_lngAuto_ID = v_lngAuto_ID;
                 //Gán người cập nhật cuối
-                newEdit.Last_Updated_By = Last_Updated_By;
+                newEdit.Last_Updated_By = User_Name;
                 //Gán hàm cập nhật cuối
                 newEdit.Last_Updated_By_Function = "drGrid_CellContentClick_Updated";
 
@@ -101,7 +104,7 @@ namespace Prj_WF_Quan_Li_Kho
 
                         //Lấy giá trị của vị trí đó
                         long v_lngAuto_ID = CUtilities.Convert_To_Long(drGrid.Rows[e.RowIndex].Cells[v_intIndex].Value);
-                        
+
                         //Xử lý code
                         CData_Don_Vi_Tinh_Controller v_ctrlDon_Vi_Tinh = new CData_Don_Vi_Tinh_Controller();
                         CData_Don_Vi_Tinh v_objData = v_ctrlDon_Vi_Tinh.Get_Data_Don_Vi_Tinh_By_ID(CSQL.Connection, v_lngAuto_ID);
@@ -134,7 +137,7 @@ namespace Prj_WF_Quan_Li_Kho
             {
                 CExcel v_objData = new CExcel();
 
-                v_objData.Author = Last_Updated_By;
+                v_objData.Author = User_Name;
                 v_objData.File_Name = "Đơn Vị Tính";
                 v_objData.Name_Sheet = "Sheet 1";
                 v_objData.Name_Title = "Danh sách đơn vị tính";
@@ -143,9 +146,9 @@ namespace Prj_WF_Quan_Li_Kho
 
                 CMessage_Box_Custom.MB_Notification(CCaption.Caption_Export_Excel, "Export thành công", MessageBoxIcon.None);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                CMessage_Box_Custom.MB_Notification(CError_Basic.Not_Close_File_Excel, "File excel bạn muốn thay đổi chưa đóng", MessageBoxIcon.Warning);
+                CMessage_Box_Custom.MB_Notification(CError_Basic.Not_Close_File_Excel, ex.Message, MessageBoxIcon.Warning);
                 return;
             }
         }
@@ -200,7 +203,7 @@ namespace Prj_WF_Quan_Li_Kho
                             //Xử lý code
                             v_objData = new CData_Don_Vi_Tinh();
 
-                            v_objData.Last_Updated_By = Last_Updated_By;
+                            v_objData.Last_Updated_By = User_Name;
                             v_objData.Last_Updated_By_Function = "Import Excel";
 
                             v_objData.Ten_Don_Vi_Tinh = CUtilities.Convert_To_String(v_row[0]);
@@ -243,6 +246,22 @@ namespace Prj_WF_Quan_Li_Kho
                         MessageBoxIcon.Error, MessageBoxButtons.OK);
                 }
             }
+        }
+        private void btnHieu_Chinh_Col_Grid_Click(object sender, EventArgs e)
+        {
+            frm_Hieu_Chinh_Col_Grid frmHieu_Chinh = new frm_Hieu_Chinh_Col_Grid();
+            frmHieu_Chinh.Grid = drGrid;
+            frmHieu_Chinh.List_Col_Hide_Index = m_arrList_Hide_Col_Index;
+            frmHieu_Chinh.ShowDialog();
+            //Gán lại các cột ẩn
+            m_arrList_Hide_Col_Index = frmHieu_Chinh.List_Col_Hide_Index;
+            frm_Data_Don_Vi_Tinh_Show_Load(sender, e);
+        }
+
+        private void btnIn_Report_Click(object sender, EventArgs e)
+        {
+            CCommon_Function.Load_Report("Reports/SampleReport.trdp");
+           
         }
     }
 }

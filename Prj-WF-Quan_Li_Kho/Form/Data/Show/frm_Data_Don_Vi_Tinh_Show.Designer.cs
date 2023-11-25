@@ -28,8 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             panel1 = new System.Windows.Forms.Panel();
+            btnHieu_Chinh_Col_Grid = new System.Windows.Forms.Button();
             btnImport = new System.Windows.Forms.Button();
             btnExport = new System.Windows.Forms.Button();
             btnThem = new System.Windows.Forms.Button();
@@ -40,6 +41,14 @@
             Auto_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             Ten_Don_Vi_Tinh = new System.Windows.Forms.DataGridViewTextBoxColumn();
             Ghi_Chu = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            delete = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Created = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Created_By = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Created_By_Function = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Last_Updated = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Last_Updated_By = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Last_Updated_By_Function = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            btnIn_Report = new System.Windows.Forms.Button();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)drGrid).BeginInit();
@@ -50,6 +59,8 @@
             panel1.BackColor = System.Drawing.SystemColors.Info;
             panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            panel1.Controls.Add(btnIn_Report);
+            panel1.Controls.Add(btnHieu_Chinh_Col_Grid);
             panel1.Controls.Add(btnImport);
             panel1.Controls.Add(btnExport);
             panel1.Controls.Add(btnThem);
@@ -58,6 +69,16 @@
             panel1.Name = "panel1";
             panel1.Size = new System.Drawing.Size(1639, 87);
             panel1.TabIndex = 0;
+            // 
+            // btnHieu_Chinh_Col_Grid
+            // 
+            btnHieu_Chinh_Col_Grid.Location = new System.Drawing.Point(717, 20);
+            btnHieu_Chinh_Col_Grid.Name = "btnHieu_Chinh_Col_Grid";
+            btnHieu_Chinh_Col_Grid.Size = new System.Drawing.Size(180, 50);
+            btnHieu_Chinh_Col_Grid.TabIndex = 6;
+            btnHieu_Chinh_Col_Grid.Text = "Ẩn Hiện Cột";
+            btnHieu_Chinh_Col_Grid.UseVisualStyleBackColor = true;
+            btnHieu_Chinh_Col_Grid.Click += btnHieu_Chinh_Col_Grid_Click;
             // 
             // btnImport
             // 
@@ -98,7 +119,7 @@
             panel2.Location = new System.Drawing.Point(1, 178);
             panel2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             panel2.Name = "panel2";
-            panel2.Size = new System.Drawing.Size(1641, 688);
+            panel2.Size = new System.Drawing.Size(1641, 664);
             panel2.TabIndex = 1;
             // 
             // drGrid
@@ -109,35 +130,35 @@
             drGrid.AllowUserToResizeRows = false;
             drGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             drGrid.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            drGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
-            drGrid.ColumnHeadersHeight = 34;
-            drGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { Deleted, Updated, Auto_ID, Ten_Don_Vi_Tinh, Ghi_Chu });
+            drGrid.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            drGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            drGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            drGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { Deleted, Updated, Auto_ID, Ten_Don_Vi_Tinh, Ghi_Chu, delete, Created, Created_By, Created_By_Function, Last_Updated, Last_Updated_By, Last_Updated_By_Function });
             drGrid.Location = new System.Drawing.Point(0, 0);
             drGrid.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             drGrid.MultiSelect = false;
             drGrid.Name = "drGrid";
             drGrid.ReadOnly = true;
             drGrid.RowHeadersVisible = false;
-            drGrid.RowHeadersWidth = 62;
+            drGrid.RowHeadersWidth = 60;
             drGrid.RowTemplate.Height = 28;
             drGrid.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             drGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            drGrid.Size = new System.Drawing.Size(1641, 688);
+            drGrid.Size = new System.Drawing.Size(1641, 664);
             drGrid.TabIndex = 0;
             drGrid.CellContentClick += drGrid_CellContentClick;
             // 
             // Deleted
             // 
-            Deleted.FillWeight = 43.0622F;
             Deleted.HeaderText = "Xóa";
-            Deleted.MinimumWidth = 8;
+            Deleted.MinimumWidth = 75;
             Deleted.Name = "Deleted";
             Deleted.ReadOnly = true;
             Deleted.Text = "Xóa";
@@ -145,7 +166,7 @@
             // Updated
             // 
             Updated.HeaderText = "Cập nhật";
-            Updated.MinimumWidth = 8;
+            Updated.MinimumWidth = 75;
             Updated.Name = "Updated";
             Updated.ReadOnly = true;
             Updated.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -154,30 +175,87 @@
             // Auto_ID
             // 
             Auto_ID.HeaderText = "Auto ID";
-            Auto_ID.MinimumWidth = 8;
+            Auto_ID.MinimumWidth = 149;
             Auto_ID.Name = "Auto_ID";
             Auto_ID.ReadOnly = true;
             // 
             // Ten_Don_Vi_Tinh
             // 
             Ten_Don_Vi_Tinh.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            Ten_Don_Vi_Tinh.FillWeight = 66.02871F;
             Ten_Don_Vi_Tinh.HeaderText = "Đơn Vị Tính";
-            Ten_Don_Vi_Tinh.MinimumWidth = 8;
+            Ten_Don_Vi_Tinh.MinimumWidth = 149;
             Ten_Don_Vi_Tinh.Name = "Ten_Don_Vi_Tinh";
             Ten_Don_Vi_Tinh.ReadOnly = true;
-            Ten_Don_Vi_Tinh.Width = 500;
+            Ten_Don_Vi_Tinh.Width = 149;
             // 
             // Ghi_Chu
             // 
             Ghi_Chu.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            Ghi_Chu.FillWeight = 190.9091F;
             Ghi_Chu.HeaderText = "Ghi Chú";
-            Ghi_Chu.MinimumWidth = 8;
+            Ghi_Chu.MinimumWidth = 149;
             Ghi_Chu.Name = "Ghi_Chu";
             Ghi_Chu.ReadOnly = true;
             Ghi_Chu.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            Ghi_Chu.Width = 737;
+            Ghi_Chu.Width = 149;
+            // 
+            // delete
+            // 
+            delete.HeaderText = "Deleted";
+            delete.MinimumWidth = 149;
+            delete.Name = "delete";
+            delete.ReadOnly = true;
+            // 
+            // Created
+            // 
+            Created.HeaderText = "Created";
+            Created.MinimumWidth = 149;
+            Created.Name = "Created";
+            Created.ReadOnly = true;
+            // 
+            // Created_By
+            // 
+            Created_By.HeaderText = "Created By";
+            Created_By.MinimumWidth = 149;
+            Created_By.Name = "Created_By";
+            Created_By.ReadOnly = true;
+            // 
+            // Created_By_Function
+            // 
+            Created_By_Function.HeaderText = "Created By Function";
+            Created_By_Function.MinimumWidth = 149;
+            Created_By_Function.Name = "Created_By_Function";
+            Created_By_Function.ReadOnly = true;
+            // 
+            // Last_Updated
+            // 
+            Last_Updated.HeaderText = "Last Updated";
+            Last_Updated.MinimumWidth = 149;
+            Last_Updated.Name = "Last_Updated";
+            Last_Updated.ReadOnly = true;
+            // 
+            // Last_Updated_By
+            // 
+            Last_Updated_By.HeaderText = "Last Updated By";
+            Last_Updated_By.MinimumWidth = 149;
+            Last_Updated_By.Name = "Last_Updated_By";
+            Last_Updated_By.ReadOnly = true;
+            // 
+            // Last_Updated_By_Function
+            // 
+            Last_Updated_By_Function.HeaderText = "Last Updated By Function";
+            Last_Updated_By_Function.MinimumWidth = 149;
+            Last_Updated_By_Function.Name = "Last_Updated_By_Function";
+            Last_Updated_By_Function.ReadOnly = true;
+            // 
+            // btnIn_Report
+            // 
+            btnIn_Report.Location = new System.Drawing.Point(488, 20);
+            btnIn_Report.Name = "btnIn_Report";
+            btnIn_Report.Size = new System.Drawing.Size(180, 50);
+            btnIn_Report.TabIndex = 7;
+            btnIn_Report.Text = "In Báo Cáo";
+            btnIn_Report.UseVisualStyleBackColor = true;
+            btnIn_Report.Click += btnIn_Report_Click;
             // 
             // frm_Data_Don_Vi_Tinh_Show
             // 
@@ -186,12 +264,13 @@
             AutoScroll = true;
             AutoSize = true;
             BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            ClientSize = new System.Drawing.Size(1642, 868);
+            ClientSize = new System.Drawing.Size(1642, 844);
             Controls.Add(panel2);
             Controls.Add(panel1);
             Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            MdiChildrenMinimizedAnchorBottom = false;
             Name = "frm_Data_Don_Vi_Tinh_Show";
-            StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             Text = "Đơn Vị Tính";
             Load += frm_Data_Don_Vi_Tinh_Show_Load;
             panel1.ResumeLayout(false);
@@ -206,12 +285,21 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.DataGridView drGrid;
         private System.Windows.Forms.Button btnThem;
+        private System.Windows.Forms.Button btnExport;
+        private System.Windows.Forms.Button btnImport;
+        private System.Windows.Forms.Button btnHieu_Chinh_Col_Grid;
         private System.Windows.Forms.DataGridViewButtonColumn Deleted;
         private System.Windows.Forms.DataGridViewButtonColumn Updated;
         private System.Windows.Forms.DataGridViewTextBoxColumn Auto_ID;
         private System.Windows.Forms.DataGridViewTextBoxColumn Ten_Don_Vi_Tinh;
         private System.Windows.Forms.DataGridViewTextBoxColumn Ghi_Chu;
-        private System.Windows.Forms.Button btnExport;
-        private System.Windows.Forms.Button btnImport;
+        private System.Windows.Forms.DataGridViewTextBoxColumn delete;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Created;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Created_By;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Created_By_Function;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Last_Updated;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Last_Updated_By;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Last_Updated_By_Function;
+        private System.Windows.Forms.Button btnIn_Report;
     }
 }

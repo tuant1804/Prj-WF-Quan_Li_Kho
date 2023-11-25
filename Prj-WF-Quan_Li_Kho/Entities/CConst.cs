@@ -14,6 +14,7 @@ namespace Prj_WF_Quan_Li_Kho.Entities
         public static DateTime? DTM_VALUE_NULL = DateTime.Now;
         public static long LONG_VALUE_NULL = 0;
         public static bool IS_VALUE_NULL = false;
+        public static float FL_VALUE_NULL = 0.0f;
 
     }
 }

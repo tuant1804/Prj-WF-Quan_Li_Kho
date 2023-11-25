@@ -35,7 +35,7 @@ namespace Prj_WF_Quan_Li_Kho
                 //Gọi form đăng nhập
 
                 frm_Dang_Nhap v_frm_Dang_Nhap = new frm_Dang_Nhap();
-                Application.Run(v_frm_Dang_Nhap);
+                Application.Run(new frm_Data_Don_Vi_Tinh_Show());
 
             }
             catch (Exception ex)//Tránh ngắt chương trình
